@@ -3,28 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UFC Бои</title>
+    <title>UFC Турнир</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>UFC Бои</h1>
+        <img src="images/logo.png" alt="UFC Logo" class="logo">
+        <h1>UFC Турнир</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="fights.html">Бои</a></li>
-                <li><a href="edit.html">Редактировать</a></li>
+                <li><a href="#upcoming">Предстоящие бои</a></li>
+                <li><a href="#fighters">Бойцы</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <h2>Добро пожаловать на сайт UFC!</h2>
-        <p>Здесь вы найдете информацию о самых актуальных боях UFC.</p>
-    </main>
+    <section id="upcoming">
+        <h2>Предстоящие бои</h2>
+        <div id="fight-list"></div>
+    </section>
+
+    <section id="fighters">
+        <h2>Наши бойцы</h2>
+        <div class="fighter-card">
+            <img src="images/conor.png" alt="Конор Макгрегор">
+            <h3>Конор Макгрегор</h3>
+            <p>Вес: Легкий</p>
+        </div>
+        <div class="fighter-card">
+            <img src="images/khabib.png" alt="Хабиб Нурмагомедов">
+            <h3>Хабиб Нурмагомедов</h3>
+            <p>Вес: Легкий</p>
+        </div>
+    </section>
 
     <footer>
-        <p>&copy; 2025 UFC. Все права защищены.</p>
+        <p>© 2025 UFC Фан-сайт</p>
     </footer>
+
+    <script src="scripts.js"></script>
 </body>
 </html>
+

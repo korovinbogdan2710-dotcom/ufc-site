@@ -1,4 +1,3 @@
-/* Общие стили */
 body {
     background-color: #121212;
     color: #f0f0f0;
@@ -7,7 +6,6 @@ body {
     padding: 0;
 }
 
-/* Хедер */
 header {
     background: #1f1f1f;
     padding: 20px;
@@ -21,7 +19,12 @@ header h1 {
     text-shadow: 2px 2px 5px #000;
 }
 
-/* Навигация */
+header .logo {
+    width: 150px;
+    display: block;
+    margin: 0 auto 10px auto;
+}
+
 nav ul {
     list-style: none;
     padding: 0;
@@ -42,31 +45,12 @@ nav a:hover {
     text-shadow: 1px 1px 5px #fff;
 }
 
-/* Секции */
-section {
-    padding: 20px;
-}
-
 h2 {
     text-align: center;
     text-shadow: 1px 1px 3px #000;
 }
 
-/* Таблицы */
-table {
-    width: 80%;
-    margin: 0 auto 20px auto;
-    border-collapse: collapse;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-}
-
-th, td {
-    border: 1px solid #444;
-    padding: 10px;
-    text-align: center;
-}
-
-/* Карточки бойцов */
+/* Блок бойцов */
 .fighter-card {
     display: inline-block;
     background: #1f1f1f;
@@ -88,10 +72,13 @@ th, td {
     border-radius: 10px;
 }
 
-/* Футер */
-footer {
+/* Список боев */
+#fight-list .fight {
     background: #1f1f1f;
     padding: 10px;
+    margin: 10px auto;
+    width: 80%;
+    border-radius: 10px;
     text-align: center;
-    box-shadow: 0 -4px 8px rgba(0,0,0,0.5);
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.7);
 }
