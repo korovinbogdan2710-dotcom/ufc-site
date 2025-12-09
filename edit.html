@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактирование боев</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Редактирование боев UFC</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="fights.html">Бои</a></li>
+                <li><a href="edit.html">Редактировать</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Добавить новый бой</h2>
+        <form id="fight-form">
+            <label for="fighter1">Боец 1:</label>
+            <input type="text" id="fighter1" name="fighter1" required>
+            
+            <label for="fighter2">Боец 2:</label>
+            <input type="text" id="fighter2" name="fighter2" required>
+            
+            <label for="date">Дата:</label>
+            <input type="date" id="date" name="date" required>
+
+            <button type="submit">Добавить бой</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 UFC. Все права защищены.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
