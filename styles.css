@@ -1,111 +1,162 @@
+/* ==========================
+   ОСНОВНОЙ ФОН И ШРИФТЫ
+========================== */
 body {
-    background-color: #121212;
-    color: #f0f0f0;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+  font-family: 'Poppins', sans-serif;
+  margin: 0; padding: 0;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  color: white;
+  overflow-x: hidden;
+  transition: background 0.5s, color 0.5s;
 }
 
-header {
-    background:#1f1f1f;
-    padding:20px;
-    text-align:center;
+body.light {
+  background: linear-gradient(135deg, #f0f0f0, #ccc, #eee);
+  color: #111;
 }
 
-header .logo {
-    width:150px;
-    display:block;
-    margin:0 auto 10px auto;
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
 }
 
-header h1 { margin:0; }
-
-nav ul.tabs {
-    list-style:none;
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    padding:0;
-    margin:10px 0;
+header h1 {
+  text-align: center;
+  margin-top: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 2.5em;
+  text-shadow: 0 0 15px #ff3b3f;
 }
 
-nav ul.tabs li {
-    cursor:pointer;
-    padding:10px 20px;
-    background:#2c2c2c;
-    border-radius:5px;
-    transition:0.3s;
+nav {
+  text-align: center;
+  margin: 20px 0;
 }
 
-nav ul.tabs li.active, nav ul.tabs li:hover {
-    background:#ff0000;
-    color:#fff;
+nav a, nav button, nav input, nav select {
+  margin: 0 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
 }
 
-.tab-content { display:none; padding:20px; }
-.tab-content.active { display:block; }
-
-/* Карточки бойцов */
-.fighter-card {
-    display:inline-block;
-    background:#1f1f1f;
-    margin:10px;
-    padding:10px;
-    width:200px;
-    text-align:center;
-    border-radius:10px;
-    box-shadow:5px 5px 15px rgba(0,0,0,0.7);
-    transition: transform 0.3s;
-}
-.fighter-card:hover { transform:translateY(-5px); }
-.fighter-card img { width:100%; border-radius:10px; }
-
-/* Матчи и результаты */
-.match, .result {
-    background:#1f1f1f;
-    padding:10px;
-    margin:10px auto;
-    width:80%;
-    text-align:center;
-    border-radius:10px;
-    box-shadow:5px 5px 15px rgba(0,0,0,0.7);
+nav button#toggleTheme {
+  background: #ff3b3f;
+  color: white;
+  font-size: 18px;
+  transition: all 0.3s;
 }
 
-/* Формы */
-form {
-    margin-top:10px;
-    display:flex;
-    flex-direction: column;
-    gap:5px;
+nav button#toggleTheme:hover {
+  transform: scale(1.1);
+  background-color: #ff1a1c;
 }
 
-form input, form select, form button {
-    padding:8px;
-    border-radius:5px;
-    border:none;
+nav input {
+  width: 150px;
 }
 
-form button {
-    background:#ff0000;
-    color:#fff;
-    cursor:pointer;
-    transition:0.3s;
+nav select {
+  background: #222;
+  color: white;
 }
 
-form button:hover {
-    background:#cc0000;
+/* ==========================
+   КАРТОЧКИ БОЙЦОВ
+========================== */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-/* Контролы фильтра и поиска */
-#fighter-controls {
-    display:flex;
-    gap:10px;
-    margin-bottom:10px;
-    flex-wrap: wrap;
+.card {
+  background: linear-gradient(145deg, #1a1a1a, #333);
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  padding: 20px;
+  margin: 15px;
+  width: 250px;
+  transition: transform 0.4s, box-shadow 0.4s;
+  display: inline-block;
+  vertical-align: top;
+  animation: fadeIn 0.5s ease forwards;
+  position: relative;
+  overflow: hidden;
 }
 
-#fighter-controls input, #fighter-controls select {
-    padding:5px;
-    border-radius:5px;
-    border:none;
+.card:hover {
+  transform: rotateY(10deg) scale(1.05);
+  box-shadow: 0 20px 50px rgba(255,59,63,0.7);
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.card p {
+  text-align: center;
+}
+
+.card .deleteBtn {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ==========================
+   МОДАЛЬНОЕ ОКНО
+========================== */
+.modal {
+  display: none; 
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.modal-content {
+  background: #222;
+  padding: 25px;
+  border-radius: 20px;
+  width: 350px;
+  color: white;
+}
+
+.modal-content input, .modal-content select {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: none;
+}
+
+/* ==========================
+   АНИМАЦИИ
+========================== */
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+@keyframes particleMove {
+  0% {transform: translateY(0);}
+  100% {transform: translateY(-1000px);}
+}
+
+/* ==========================
+   АДАПТИВНОСТЬ
+========================== */
+@media (max-width: 768px) {
+  .card { width: 90%; margin: 15px auto; display: block; }
+  nav a, nav button, nav input, nav select { display: block; margin: 10px auto; }
 }

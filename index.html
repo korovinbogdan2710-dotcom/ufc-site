@@ -1,82 +1,62 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UFC Турнир</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UFC Премиум</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <img src="images/logo.png" alt="UFC Logo" class="logo">
-        <h1>UFC Турнир</h1>
-        <nav>
-            <ul class="tabs">
-                <li data-tab="fighters" class="active">Бойцы</li>
-                <li data-tab="matches">Матчи</li>
-                <li data-tab="results">Результаты</li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <!-- Бойцы -->
-        <section id="fighters" class="tab-content active">
-            <h2>Бойцы</h2>
-            <div id="fighter-controls">
-                <input type="text" id="search-fighter" placeholder="Поиск бойца...">
-                <select id="filter-weight">
-                    <option value="">Все веса</option>
-                    <option value="Легкий">Легкий</option>
-                    <option value="Средний">Средний</option>
-                    <option value="Тяжелый">Тяжелый</option>
-                </select>
-            </div>
-            <div id="fighters-list"></div>
-            <h3>Добавить нового бойца</h3>
-            <form id="add-fighter-form">
-                <input type="text" id="fighter-name" placeholder="Имя" required>
-                <input type="text" id="fighter-weight" placeholder="Весовая категория" required>
-                <input type="text" id="fighter-country" placeholder="Страна">
-                <input type="text" id="fighter-photo" placeholder="Путь к фото" required>
-                <button type="submit">Добавить</button>
-            </form>
-        </section>
+<header>
+  <h1>UFC Бои Премиум</h1>
+  <nav>
+    <a href="#cards">Бойцы</a>
+    <button id="toggleTheme">🌙</button>
+    <input type="text" id="search" placeholder="Поиск бойца...">
+    <select id="sortCategory">
+      <option value="all">Все категории</option>
+      <option value="Лёгкий вес">Лёгкий вес</option>
+      <option value="Средний вес">Средний вес</option>
+      <option value="Тяжёлый вес">Тяжёлый вес</option>
+    </select>
+    <select id="sortStat">
+      <option value="default">Сортировка по статистике</option>
+      <option value="asc">По возрастанию</option>
+      <option value="desc">По убыванию</option>
+    </select>
+  </nav>
+</header>
 
-        <!-- Матчи -->
-        <section id="matches" class="tab-content">
-            <h2>Матчи</h2>
-            <div id="matches-list"></div>
-            <h3>Добавить матч</h3>
-            <form id="add-match-form">
-                <input type="text" id="match-fighter1" placeholder="Боец 1" required>
-                <input type="text" id="match-fighter2" placeholder="Боец 2" required>
-                <input type="date" id="match-date" required>
-                <button type="submit">Добавить матч</button>
-            </form>
-        </section>
+<main class="container">
 
-        <!-- Результаты -->
-        <section id="results" class="tab-content">
-            <h2>Результаты</h2>
-            <div id="results-list"></div>
-            <h3>Добавить результат</h3>
-            <form id="add-result-form">
-                <input type="text" id="result-match" placeholder="Матч (Боец1 vs Боец2)" required>
-                <input type="text" id="result-winner" placeholder="Победитель" required>
-                <button type="submit">Добавить результат</button>
-            </form>
-        </section>
-    </main>
+  <button class="open-modal">Добавить бойца</button>
 
-    <footer>
-        <p>© 2025 UFC Фан-сайт</p>
-    </footer>
+  <div id="cards" class="cards-container"></div>
 
-    <script src="scripts.js"></script>
+</main>
+
+<!-- Модальное окно -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Добавить бойца</h2>
+    <input type="text" id="fighterName" placeholder="Имя бойца">
+    <input type="text" id="fighterStat" placeholder="Статистика (например 20-3)">
+    <select id="fighterCategory">
+      <option value="Лёгкий вес">Лёгкий вес</option>
+      <option value="Средний вес">Средний вес</option>
+      <option value="Тяжёлый вес">Тяжёлый вес</option>
+    </select>
+    <button id="saveFighter">Сохранить</button>
+  </div>
+</div>
+
+<!-- Частицы на фоне -->
+<canvas id="particleCanvas"></canvas>
+
+<script src="scripts.js"></script>
 </body>
 </html>
-
-
-
 
