@@ -20,19 +20,52 @@
     </header>
 
     <main>
+        <!-- Бойцы -->
         <section id="fighters" class="tab-content active">
             <h2>Бойцы</h2>
+            <div id="fighter-controls">
+                <input type="text" id="search-fighter" placeholder="Поиск бойца...">
+                <select id="filter-weight">
+                    <option value="">Все веса</option>
+                    <option value="Легкий">Легкий</option>
+                    <option value="Средний">Средний</option>
+                    <option value="Тяжелый">Тяжелый</option>
+                </select>
+            </div>
             <div id="fighters-list"></div>
+            <h3>Добавить нового бойца</h3>
+            <form id="add-fighter-form">
+                <input type="text" id="fighter-name" placeholder="Имя" required>
+                <input type="text" id="fighter-weight" placeholder="Весовая категория" required>
+                <input type="text" id="fighter-country" placeholder="Страна">
+                <input type="text" id="fighter-photo" placeholder="Путь к фото" required>
+                <button type="submit">Добавить</button>
+            </form>
         </section>
 
+        <!-- Матчи -->
         <section id="matches" class="tab-content">
             <h2>Матчи</h2>
             <div id="matches-list"></div>
+            <h3>Добавить матч</h3>
+            <form id="add-match-form">
+                <input type="text" id="match-fighter1" placeholder="Боец 1" required>
+                <input type="text" id="match-fighter2" placeholder="Боец 2" required>
+                <input type="date" id="match-date" required>
+                <button type="submit">Добавить матч</button>
+            </form>
         </section>
 
+        <!-- Результаты -->
         <section id="results" class="tab-content">
             <h2>Результаты</h2>
             <div id="results-list"></div>
+            <h3>Добавить результат</h3>
+            <form id="add-result-form">
+                <input type="text" id="result-match" placeholder="Матч (Боец1 vs Боец2)" required>
+                <input type="text" id="result-winner" placeholder="Победитель" required>
+                <button type="submit">Добавить результат</button>
+            </form>
         </section>
     </main>
 
@@ -43,6 +76,7 @@
     <script src="scripts.js"></script>
 </body>
 </html>
+
 
 
 
