@@ -12,6 +12,9 @@ let results = [
     {match: 'Максим vs Никита', winner: 'Максим'}
 ];
 
+let isAdmin = false; // по умолчанию не админ
+const adminPassword = "q112233445566W"; // <-- твой пароль
+
 // ===== ФУНКЦИИ ОТОБРАЖЕНИЯ =====
 function displayFighters(list = fighters) {
     const container = document.getElementById('fighters-list');
@@ -70,7 +73,39 @@ tabs.forEach(tab => {
     });
 });
 
-// ===== ДОБАВЛЕНИЕ НОВЫХ БОЙЦОВ =====
+// ===== ПОИСК И ФИЛЬТР БОЙЦОВ =====
+document.getElementById('search-fighter').addEventListener('input', e => {
+    const value = e.target.value.toLowerCase();
+    displayFighters(fighters.filter(f => f.name.toLowerCase().includes(value)));
+});
+
+document.getElementById('filter-weight').addEventListener('change', e => {
+    const value = e.target.value;
+    displayFighters(value ? fighters.filter(f => f.weight === value) : fighters);
+});
+
+// ===== СКРЫВАЕМ ФОРМЫ ПО УМОЛЧАНИЮ =====
+document.getElementById('add-match-form').style.display = "none";
+document.getElementById('add-result-form').style.display = "none";
+
+// ===== ВХОД АДМИНА ЧЕРЕЗ КЛАВИШУ X =====
+document.addEventListener('keydown', (e) => {
+    // Нажатие клавиши "X" для входа
+    if(e.key.toLowerCase() === 'x' && !isAdmin){
+        const inputPass = prompt("Введите пароль для входа в систему администратора:");
+        if(inputPass === adminPassword){
+            isAdmin = true;
+            alert("Вы вошли как админ! Формы редактирования видны.");
+            document.getElementById('add-match-form').style.display = "block";
+            document.getElementById('add-result-form').style.display = "block";
+        } else {
+            alert("Неверный пароль! Доступ запрещён.");
+        }
+    }
+});
+
+// ===== ДОБАВЛЕНИЕ ДАННЫХ =====
+// Все могут добавлять бойцов
 document.getElementById('add-fighter-form').addEventListener('submit', e => {
     e.preventDefault();
     const name = document.getElementById('fighter-name').value;
@@ -82,8 +117,9 @@ document.getElementById('add-fighter-form').addEventListener('submit', e => {
     e.target.reset();
 });
 
-// ===== ДОБАВЛЕНИЕ МАТЧЕЙ =====
+// Только админ может добавлять матчи и результаты
 document.getElementById('add-match-form').addEventListener('submit', e => {
+    if(!isAdmin) return;
     e.preventDefault();
     const fighter1 = document.getElementById('match-fighter1').value;
     const fighter2 = document.getElementById('match-fighter2').value;
@@ -93,25 +129,14 @@ document.getElementById('add-match-form').addEventListener('submit', e => {
     e.target.reset();
 });
 
-// ===== ДОБАВЛЕНИЕ РЕЗУЛЬТАТОВ =====
 document.getElementById('add-result-form').addEventListener('submit', e => {
+    if(!isAdmin) return;
     e.preventDefault();
     const match = document.getElementById('result-match').value;
     const winner = document.getElementById('result-winner').value;
     results.push({match, winner});
     displayResults();
     e.target.reset();
-});
-
-// ===== ПОИСК И ФИЛЬТР БОЙЦОВ =====
-document.getElementById('search-fighter').addEventListener('input', e => {
-    const value = e.target.value.toLowerCase();
-    displayFighters(fighters.filter(f => f.name.toLowerCase().includes(value)));
-});
-
-document.getElementById('filter-weight').addEventListener('change', e => {
-    const value = e.target.value;
-    displayFighters(value ? fighters.filter(f => f.weight === value) : fighters);
 });
 
 // ===== ИНИЦИАЛИЗАЦИЯ =====
