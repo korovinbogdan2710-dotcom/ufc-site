@@ -1,162 +1,186 @@
-/* ==========================
-   ОСНОВНОЙ ФОН И ШРИФТЫ
-========================== */
+/* === BASE === */
 body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0; padding: 0;
-  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-  color: white;
-  overflow-x: hidden;
-  transition: background 0.5s, color 0.5s;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #0d0d0d;
+    color: white;
 }
 
-body.light {
-  background: linear-gradient(135deg, #f0f0f0, #ccc, #eee);
-  color: #111;
+.section {
+    padding: 60px 10%;
 }
 
-.container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px;
+h2 {
+    text-align: left;
+    font-size: 32px;
+    border-left: 4px solid #d40000;
+    padding-left: 12px;
+    margin-bottom: 25px;
 }
 
-header h1 {
-  text-align: center;
-  margin-top: 20px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-size: 2.5em;
-  text-shadow: 0 0 15px #ff3b3f;
+/* === HEADER === */
+.header {
+    width: 100%;
+    background: #000;
+    padding: 18px 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    border-bottom: 2px solid #d40000;
 }
 
-nav {
-  text-align: center;
-  margin: 20px 0;
+.logo {
+    font-size: 26px;
+    font-weight: bold;
+}
+.logo span {
+    color: #d40000;
 }
 
-nav a, nav button, nav input, nav select {
-  margin: 0 10px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
+.nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 18px;
+    transition: 0.3s;
 }
 
-nav button#toggleTheme {
-  background: #ff3b3f;
-  color: white;
-  font-size: 18px;
-  transition: all 0.3s;
+.nav a:hover {
+    color: #d40000;
 }
 
-nav button#toggleTheme:hover {
-  transform: scale(1.1);
-  background-color: #ff1a1c;
+/* === HERO === */
+.hero {
+    height: 70vh;
+    background: url('images/hero.jpg') center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 10%;
 }
 
-nav input {
-  width: 150px;
+.hero h1 {
+    font-size: 58px;
+    margin: 0;
 }
 
-nav select {
-  background: #222;
-  color: white;
+.hero p {
+    font-size: 22px;
+    margin-top: 10px;
+    max-width: 400px;
 }
 
-/* ==========================
-   КАРТОЧКИ БОЙЦОВ
-========================== */
-.cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+.cta-btn {
+    margin-top: 25px;
+    padding: 15px 40px;
+    font-size: 20px;
+    background: #d40000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
+.cta-btn:hover {
+    background: #ff1a1a;
+}
+
+/* === CARDS GRID === */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+/* === CARD === */
 .card {
-  background: linear-gradient(145deg, #1a1a1a, #333);
-  border-radius: 20px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-  padding: 20px;
-  margin: 15px;
-  width: 250px;
-  transition: transform 0.4s, box-shadow 0.4s;
-  display: inline-block;
-  vertical-align: top;
-  animation: fadeIn 0.5s ease forwards;
-  position: relative;
-  overflow: hidden;
+    background: #111;
+    padding: 20px;
+    border: 2px solid #d40000;
+    border-radius: 10px;
+    transition: 0.3s;
+    transform-style: preserve-3d;
 }
 
 .card:hover {
-  transform: rotateY(10deg) scale(1.05);
-  box-shadow: 0 20px 50px rgba(255,59,63,0.7);
+    transform: scale(1.05) rotateX(8deg);
+    box-shadow: 0 0 20px #d40000;
 }
 
 .card h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  text-align: center;
+    margin: 0 0 10px;
 }
 
 .card p {
-  text-align: center;
+    opacity: 0.85;
+    font-size: 15px;
 }
 
-.card .deleteBtn {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
+.del-btn, .edit-btn {
+    margin-top: 8px;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
 }
 
-/* ==========================
-   МОДАЛЬНОЕ ОКНО
-========================== */
+.del-btn {
+    background: #900;
+}
+.edit-btn {
+    background: #444;
+}
+
+.add-btn {
+    margin-top: 25px;
+    padding: 14px 25px;
+    background: #d40000;
+    border: none;
+    cursor: pointer;
+}
+
+/* === NEWS === */
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 25px;
+}
+
+.news-item {
+    padding: 20px;
+    background: #111;
+    border-left: 4px solid #d40000;
+}
+
+/* === MODAL === */
+.modal-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .modal {
-  display: none; 
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.8);
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
+    background: #111;
+    padding: 30px;
+    width: 350px;
+    border: 2px solid #d40000;
 }
 
-.modal-content {
-  background: #222;
-  padding: 25px;
-  border-radius: 20px;
-  width: 350px;
-  color: white;
-}
-
-.modal-content input, .modal-content select {
-  width: 100%;
-  padding: 8px;
-  margin: 10px 0;
-  border-radius: 8px;
-  border: none;
-}
-
-/* ==========================
-   АНИМАЦИИ
-========================== */
-@keyframes fadeIn {
-  from {opacity: 0; transform: translateY(20px);}
-  to {opacity: 1; transform: translateY(0);}
-}
-
-@keyframes particleMove {
-  0% {transform: translateY(0);}
-  100% {transform: translateY(-1000px);}
-}
-
-/* ==========================
-   АДАПТИВНОСТЬ
-========================== */
-@media (max-width: 768px) {
-  .card { width: 90%; margin: 15px auto; display: block; }
-  nav a, nav button, nav input, nav select { display: block; margin: 10px auto; }
+.modal input, .modal textarea {
+    width: 100%;
+    margin: 8px 0;
+    padding: 10px;
+    background: #222;
+    border: 1px solid #444;
+    color: white;
 }

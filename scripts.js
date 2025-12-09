@@ -1,16 +1,13 @@
-/// SCROLL
 function scrollToFights() {
     document.getElementById("fights").scrollIntoView({ behavior: "smooth" });
 }
 
-// DATA
 let fights = [];
 let fighters = [];
 let news = [];
 
 const modal = document.getElementById("modal-container");
 
-// RENDER FUNCTIONS
 function renderFights() {
     const block = document.getElementById("fightsList");
     block.innerHTML = "";
@@ -24,6 +21,7 @@ function renderFights() {
             </div>`;
     });
 }
+
 function renderFighters() {
     const block = document.getElementById("fightersList");
     block.innerHTML = "";
@@ -37,6 +35,7 @@ function renderFighters() {
             </div>`;
     });
 }
+
 function renderNews() {
     const block = document.getElementById("newsList");
     block.innerHTML = "";
@@ -130,7 +129,6 @@ function deleteNews(i) {
     renderNews();
 }
 
-// CLOSE
 function closeModal() {
     modal.innerHTML = "";
 }

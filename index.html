@@ -1,62 +1,55 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UFC Премиум</title>
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UFC Fight Hub</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-  <h1>UFC Бои Премиум</h1>
-  <nav>
-    <a href="#cards">Бойцы</a>
-    <button id="toggleTheme">🌙</button>
-    <input type="text" id="search" placeholder="Поиск бойца...">
-    <select id="sortCategory">
-      <option value="all">Все категории</option>
-      <option value="Лёгкий вес">Лёгкий вес</option>
-      <option value="Средний вес">Средний вес</option>
-      <option value="Тяжёлый вес">Тяжёлый вес</option>
-    </select>
-    <select id="sortStat">
-      <option value="default">Сортировка по статистике</option>
-      <option value="asc">По возрастанию</option>
-      <option value="desc">По убыванию</option>
-    </select>
-  </nav>
-</header>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo">UFC<span>HUB</span></div>
+        <nav class="nav">
+            <a href="#fights">Бои</a>
+            <a href="#fighters">Бойцы</a>
+            <a href="#news">Новости</a>
+        </nav>
+    </header>
 
-<main class="container">
+    <!-- HERO -->
+    <section class="hero">
+        <h1>Добро пожаловать на UFC HUB</h1>
+        <p>Последние новости, бойцы, турниры и статистика.</p>
+        <button class="cta-btn" onclick="scrollToFights()">Смотреть бои</button>
+    </section>
 
-  <button class="open-modal">Добавить бойца</button>
+    <!-- UPCOMING FIGHTS -->
+    <section id="fights" class="section">
+        <h2>Предстоящие бои</h2>
+        <div id="fightsList" class="cards-grid"></div>
+        <button class="add-btn" onclick="openFightModal()">Добавить бой</button>
+    </section>
 
-  <div id="cards" class="cards-container"></div>
+    <!-- TOP FIGHTERS -->
+    <section id="fighters" class="section">
+        <h2>Лучшие бойцы</h2>
+        <div id="fightersList" class="cards-grid"></div>
+        <button class="add-btn" onclick="openFighterModal()">Добавить бойца</button>
+    </section>
 
-</main>
+    <!-- NEWS -->
+    <section id="news" class="section">
+        <h2>Новости</h2>
+        <div id="newsList" class="news-grid"></div>
+        <button class="add-btn" onclick="openNewsModal()">Добавить новость</button>
+    </section>
 
-<!-- Модальное окно -->
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>Добавить бойца</h2>
-    <input type="text" id="fighterName" placeholder="Имя бойца">
-    <input type="text" id="fighterStat" placeholder="Статистика (например 20-3)">
-    <select id="fighterCategory">
-      <option value="Лёгкий вес">Лёгкий вес</option>
-      <option value="Средний вес">Средний вес</option>
-      <option value="Тяжёлый вес">Тяжёлый вес</option>
-    </select>
-    <button id="saveFighter">Сохранить</button>
-  </div>
-</div>
+    <!-- MODALS -->
+    <div id="modal-container"></div>
 
-<!-- Частицы на фоне -->
-<canvas id="particleCanvas"></canvas>
+    <script src="scripts.js"></script>
 
-<script src="scripts.js"></script>
 </body>
 </html>
-
