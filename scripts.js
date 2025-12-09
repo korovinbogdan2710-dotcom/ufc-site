@@ -1,158 +1,142 @@
-// ===== ДАННЫЕ =====
-let fighters = [
-    {name: 'Максим', photo: 'images/max.jpg', weight: 'Легкий', country: 'Россия'},
-    {name: 'Никита', photo: 'images/nikita.jpg', weight: 'Легкий', country: 'Россия'}
-];
+// ==========================
+// ПЕРЕМЕННЫЕ
+// ==========================
+let fighters = [];
+const openModalBtn = document.querySelector('.open-modal');
+const modal = document.getElementById('modal');
+const closeModal = document.querySelector('.close');
+const saveFighterBtn = document.getElementById('saveFighter');
+const cardsContainer = document.getElementById('cards');
+const searchInput = document.getElementById('search');
+const toggleThemeBtn = document.getElementById('toggleTheme');
+const sortCategory = document.getElementById('sortCategory');
+const sortStat = document.getElementById('sortStat');
 
-let matches = [
-    {fighter1: 'Максим', fighter2: 'Никита', date: '2025-12-12'}
-];
+// ==========================
+// ТЕМА
+// ==========================
+toggleThemeBtn.onclick = () => {
+  document.body.classList.toggle('light');
+};
 
-let results = [
-    {match: 'Максим vs Никита', winner: 'Максим'}
-];
+// ==========================
+// МОДАЛЬНОЕ ОКНО
+// ==========================
+openModalBtn.onclick = () => modal.style.display = 'flex';
+closeModal.onclick = () => modal.style.display = 'none';
+window.onclick = (e) => { if(e.target.id==='modal') modal.style.display='none'; };
 
-let isAdmin = false; // по умолчанию не админ
-const adminPassword = "q112233445566W"; // твой пароль
+// ==========================
+// ДОБАВЛЕНИЕ БОЙЦА
+// ==========================
+saveFighterBtn.onclick = () => {
+  const name = document.getElementById('fighterName').value;
+  const stat = document.getElementById('fighterStat').value;
+  const category = document.getElementById('fighterCategory').value;
 
-// ===== ФУНКЦИИ ОТОБРАЖЕНИЯ =====
-function displayFighters(list = fighters) {
-    const container = document.getElementById('fighters-list');
-    container.innerHTML = '';
-    list.forEach((f, index) => {
-        const div = document.createElement('div');
-        div.classList.add('fighter-card');
-        div.innerHTML = `
-            <img src="${f.photo}" alt="${f.name}">
-            <h3>${f.name}</h3>
-            <p>Вес: ${f.weight}</p>
-            <p>Страна: ${f.country}</p>
-            ${isAdmin ? `<button onclick="deleteFighter(${index})">Удалить</button>` : ''}
-        `;
-        container.appendChild(div);
-    });
+  if(name && stat) {
+    fighters.push({name, stat, category});
+    document.getElementById('fighterName').value='';
+    document.getElementById('fighterStat').value='';
+    modal.style.display='none';
+    renderFighters(fighters);
+  }
+};
+
+// ==========================
+// УДАЛЕНИЕ БОЙЦА С АНИМАЦИЕЙ
+// ==========================
+function deleteFighter(index){
+  const card = cardsContainer.children[index];
+  card.style.transform='scale(0) rotate(-30deg)';
+  card.style.opacity='0';
+  setTimeout(()=>{ fighters.splice(index,1); renderFighters(fighters); },300);
 }
 
-function displayMatches() {
-    const container = document.getElementById('matches-list');
-    container.innerHTML = '';
-    matches.forEach((m, index) => {
-        const div = document.createElement('div');
-        div.classList.add('match');
-        div.innerHTML = `
-            <p><strong>${m.fighter1}</strong> vs <strong>${m.fighter2}</strong></p>
-            <p>Дата: ${m.date}</p>
-            ${isAdmin ? `<button onclick="deleteMatch(${index})">Удалить</button>` : ''}
-        `;
-        container.appendChild(div);
-    });
+// ==========================
+// РЕНДЕР КАРТОЧЕК
+// ==========================
+function renderFighters(list){
+  cardsContainer.innerHTML='';
+  list.forEach((fighter,index)=>{
+    const card=document.createElement('div');
+    card.classList.add('card');
+    card.innerHTML=`
+      <h3>${fighter.name}</h3>
+      <p>Статистика: ${fighter.stat}</p>
+      <p>Категория: ${fighter.category}</p>
+      <button class="deleteBtn" onclick="deleteFighter(${index})">Удалить</button>
+    `;
+    cardsContainer.appendChild(card);
+  });
 }
 
-function displayResults() {
-    const container = document.getElementById('results-list');
-    container.innerHTML = '';
-    results.forEach((r, index) => {
-        const div = document.createElement('div');
-        div.classList.add('result');
-        div.innerHTML = `
-            <p>${r.match}</p>
-            <p>Победитель: <strong>${r.winner}</strong></p>
-            ${isAdmin ? `<button onclick="deleteResult(${index})">Удалить</button>` : ''}
-        `;
-        container.appendChild(div);
-    });
-}
-
-// ===== ФУНКЦИИ УДАЛЕНИЯ =====
-function deleteFighter(index) {
-    if(!isAdmin) return;
-    if(confirm(`Удалить бойца ${fighters[index].name}?`)) {
-        fighters.splice(index, 1);
-        displayFighters();
-    }
-}
-
-function deleteMatch(index) {
-    if(!isAdmin) return;
-    if(confirm(`Удалить матч ${matches[index].fighter1} vs ${matches[index].fighter2}?`)) {
-        matches.splice(index, 1);
-        displayMatches();
-    }
-}
-
-function deleteResult(index) {
-    if(!isAdmin) return;
-    if(confirm(`Удалить результат ${results[index].match}?`)) {
-        results.splice(index, 1);
-        displayResults();
-    }
-}
-
-// ===== ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК =====
-const tabs = document.querySelectorAll('nav ul.tabs li');
-const contents = document.querySelectorAll('.tab-content');
-
-tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        contents.forEach(c => c.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById(tab.dataset.tab).classList.add('active');
-    });
+// ==========================
+// ПОИСК
+// ==========================
+searchInput.addEventListener('input',()=>{
+  const value = searchInput.value.toLowerCase();
+  const filtered = fighters.filter(f=>f.name.toLowerCase().includes(value));
+  renderFighters(filtered);
 });
 
-// ===== ВХОД АДМИНА ЧЕРЕЗ КЛАВИШУ X =====
-document.addEventListener('keydown', (e) => {
-    if(e.key.toLowerCase() === 'x' && !isAdmin){
-        const inputPass = prompt("Введите пароль для входа в систему администратора:");
-        if(inputPass === adminPassword){
-            isAdmin = true;
-            alert("Вы вошли как админ! Формы редактирования видны.");
-            document.getElementById('add-match-form').style.display = "block";
-            document.getElementById('add-result-form').style.display = "block";
-            displayFighters();
-            displayMatches();
-            displayResults();
-        } else {
-            alert("Неверный пароль! Доступ запрещён.");
-        }
-    }
+// ==========================
+// ФИЛЬТР ПО КАТЕГОРИИ
+// ==========================
+sortCategory.addEventListener('change',()=>{
+  filterAndSort();
 });
 
-// ===== ДОБАВЛЕНИЕ ДАННЫХ =====
-document.getElementById('add-fighter-form').addEventListener('submit', e => {
-    e.preventDefault();
-    const name = document.getElementById('fighter-name').value;
-    const weight = document.getElementById('fighter-weight').value;
-    const country = document.getElementById('fighter-country').value;
-    const photo = document.getElementById('fighter-photo').value;
-    fighters.push({name, weight, country, photo});
-    displayFighters();
-    e.target.reset();
+// ==========================
+// СОРТИРОВКА ПО СТАТИСТИКЕ
+// ==========================
+sortStat.addEventListener('change',()=>{
+  filterAndSort();
 });
 
-document.getElementById('add-match-form').addEventListener('submit', e => {
-    if(!isAdmin) return;
-    e.preventDefault();
-    const fighter1 = document.getElementById('match-fighter1').value;
-    const fighter2 = document.getElementById('match-fighter2').value;
-    const date = document.getElementById('match-date').value;
-    matches.push({fighter1, fighter2, date});
-    displayMatches();
-    e.target.reset();
-});
+function filterAndSort(){
+  let filtered = [...fighters];
+  const cat = sortCategory.value;
+  if(cat!=='all') filtered=filtered.filter(f=>f.category===cat);
+  const sortType = sortStat.value;
+  if(sortType==='asc'){
+    filtered.sort((a,b)=>parseFloat(a.stat.split('-')[0])-parseFloat(b.stat.split('-')[0]));
+  } else if(sortType==='desc'){
+    filtered.sort((a,b)=>parseFloat(b.stat.split('-')[0])-parseFloat(a.stat.split('-')[0]));
+  }
+  renderFighters(filtered);
+}
 
-document.getElementById('add-result-form').addEventListener('submit', e => {
-    if(!isAdmin) return;
-    e.preventDefault();
-    const match = document.getElementById('result-match').value;
-    const winner = document.getElementById('result-winner').value;
-    results.push({match, winner});
-    displayResults();
-    e.target.reset();
-});
+// ==========================
+// ИНИЦИАЛЬНЫЕ БОЙЦЫ
+// ==========================
+fighters.push({name:"Хабиб Нурмагомедов", stat:"29-0", category:"Лёгкий вес"});
+fighters.push({name:"Конор МакГрегор", stat:"22-6", category:"Лёгкий вес"});
+fighters.push({name:"Джон Джонс", stat:"27-1", category:"Средний вес"});
+renderFighters(fighters);
 
-// ===== ИНИЦИАЛИЗАЦИЯ =====
-displayFighters();
-displayMatches();
-displayResults();
+// ==========================
+// ЧАСТИЦЫ НА ФОНЕ
+// ==========================
+const canvas = document.getElementById('particleCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+let particles = [];
+for(let i=0;i<100;i++){
+  particles.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*3+1, speed:Math.random()*1+0.2});
+}
+function drawParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,255,255,0.6)';
+    ctx.fill();
+    p.y-=p.speed;
+    if(p.y<0)p.y=canvas.height;
+  });
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+window.addEventListener('resize',()=>{ canvas.width=window.innerWidth; canvas.height=window.innerHeight; });
