@@ -7,8 +7,8 @@
 <style>
 body {font-family: Arial, sans-serif; background:#111; color:#fff; margin:0; padding:0;}
 header {padding:20px; text-align:center; background:#222;}
-nav {display:flex; justify-content:center; background:#333;}
-nav button {background:#444; border:none; color:#fff; padding:10px 20px; cursor:pointer; margin:0 5px; border-radius:5px; font-size:16px;}
+nav {display:flex; justify-content:center; background:#333; flex-wrap:wrap;}
+nav button {background:#444; border:none; color:#fff; padding:10px 20px; cursor:pointer; margin:5px; border-radius:5px; font-size:16px;}
 nav button.active {background:#f00;}
 section {display:none; padding:20px;}
 section.active {display:block;}
@@ -22,23 +22,21 @@ button {margin-top:10px; padding:5px 10px; background:#f00; border:none; color:#
 
 /* Модальные окна */
 .modal {display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; overflow:auto; background: rgba(0,0,0,0.9);}
-.modal-content {background:#222; margin:10% auto; padding:20px; border:1px solid #444; width:80%; max-width:600px; border-radius:10px; color:#fff; position:relative;}
+.modal-content {background:#222; margin:5% auto; padding:20px; border:1px solid #444; width:80%; max-width:600px; border-radius:10px; color:#fff; position:relative;}
 .close {color:#f00; position:absolute; top:10px; right:20px; font-size:28px; font-weight:bold; cursor:pointer;}
 .close:hover {color:#fff;}
-.fighter-photo {width:100%; border-radius:8px; margin-bottom:15px;}
+.fighter-photo, .news-photo {width:100%; border-radius:8px; margin-bottom:15px;}
 
 /* Бои */
-.fights-table {width:100%; max-width:800px; margin:0 auto; border-collapse:collapse;}
-.fights-table th, .fights-table td {border:1px solid #444; padding:10px; text-align:center;}
-.fights-table th {background:#222;}
-.fights-table td button {padding:5px 8px; background:#f00; border:none; border-radius:4px; cursor:pointer; color:#fff;}
+.fights-table, .tournament-table {width:100%; max-width:800px; margin:0 auto; border-collapse:collapse;}
+.fights-table th, .fights-table td, .tournament-table th, .tournament-table td {border:1px solid #444; padding:10px; text-align:center;}
+.fights-table th, .tournament-table th {background:#222;}
+.fights-table td button, .tournament-table td button {padding:5px 8px; background:#f00; border:none; border-radius:4px; cursor:pointer; color:#fff;}
 
 /* Новости */
-.news-grid {display:flex; flex-direction:column; gap:15px;}
-.news-item {background:#222; border:1px solid #444; padding:15px; border-radius:8px; transition: transform 0.2s;}
-.news-item:hover {transform:scale(1.02);}
-.news-item h3 {margin-top:0; color:#f00;}
-.news-item p {margin:5px 0 0 0;}
+.news-grid {display:flex; flex-wrap:wrap; gap:20px; justify-content:center;}
+.news-card {background:#222; border:1px solid #444; padding:10px; width:300px; text-align:center; border-radius:8px; cursor:pointer;}
+.news-card img {width:100%; border-radius:8px;}
 </style>
 </head>
 <body>
@@ -51,7 +49,7 @@ button {margin-top:10px; padding:5px 10px; background:#f00; border:none; color:#
   <button class="tab-btn active" data-tab="fighters">Бойцы</button>
   <button class="tab-btn" data-tab="referee">Главный судья</button>
   <button class="tab-btn" data-tab="fights">Бои и результаты</button>
-  <button class="tab-btn" data-tab="news">Новости UFC</button>
+  <button class="tab-btn" data-tab="news">Новости</button>
 </nav>
 
 <!-- Вкладка Бойцы -->
@@ -112,7 +110,7 @@ button {margin-top:10px; padding:5px 10px; background:#f00; border:none; color:#
         <th>Бой</th>
         <th>Победитель</th>
         <th>Метод</th>
-        <th>Кнопка</th>
+        <th>Подробнее</th>
       </tr>
     </thead>
     <tbody>
@@ -144,26 +142,26 @@ button {margin-top:10px; padding:5px 10px; background:#f00; border:none; color:#
   </table>
 </section>
 
-<!-- Вкладка Новости UFC -->
+<!-- Вкладка Новости -->
 <section id="news">
   <h2>Новости UFC</h2>
   <div class="news-grid">
-    <div class="news-item">
-      <h3>Чекушов готовится к следующему бою</h3>
-      <p>Никита Чекушов провел интенсивную подготовку и готовится к своему следующему поединку. Ожидаются большие изменения в его стратегии.</p>
+    <div class="news-card" onclick="openModal('news1')">
+      <img src="images/news1.jpg" alt="Новость 1">
+      <h3>Большой турнир UFC в Лас-Вегасе</h3>
+      <p>Дата: 20 декабря 2025</p>
+      <button>Подробнее</button>
     </div>
-    <div class="news-item">
-      <h3>Новые бойцы присоединились к турниру</h3>
-      <p>В турнир UFC вошли новые талантливые бойцы. Следите за их выступлениями и результатами в разделе "Бои и результаты".</p>
-    </div>
-    <div class="news-item">
-      <h3>Турнир UFC в следующем месяце</h3>
-      <p>Организаторы анонсировали новый турнир UFC на следующий месяц. Будет множество захватывающих боев и неожиданных исходов.</p>
+    <div class="news-card" onclick="openModal('news2')">
+      <img src="images/news2.jpg" alt="Новость 2">
+      <h3>Интервью с чемпионом</h3>
+      <p>Узнайте о подготовке к бою</p>
+      <button>Подробнее</button>
     </div>
   </div>
 </section>
 
-<!-- Модалки бойцов -->
+<!-- Модалки бойцов с описанием -->
 <div id="chekushov" class="modal">
   <div class="modal-content">
     <span class="close" onclick="closeModal('chekushov')">&times;</span>
@@ -171,8 +169,7 @@ button {margin-top:10px; padding:5px 10px; background:#f00; border:none; color:#
     <img src="images/chekushov.png" class="fighter-photo">
     <p>Рекорд: 10 побед, 2 поражения</p>
     <p>Вес: 75 кг</p>
-    <p>Главный судья: Богдан Коровин</p>
-    <p>Подробности тренировок и подготовки бойца: Каждый день поднимает пиццу вместо штанги для “силы духа”.</p>
+    <p>Описание: Каждый день тренируется по 3 часа, делая кардио и спарринги. Владеет техникой бокса и партером.</p>
   </div>
 </div>
 
@@ -183,12 +180,103 @@ button {margin-top:10px; padding:5px 10px; background:#f00; border:none; color:#
     <img src="images/prestrel.png" class="fighter-photo">
     <p>Рекорд: 8 побед, 1 поражение</p>
     <p>Вес: 59 кг</p>
-    <p>Главный судья: Богдан Коровин</p>
-    <p>Подробности тренировок и подготовки бойца: Тренируется с подушками и разминается под музыку из детских мультфильмов.</p>
+    <p>Описание: Отличается скоростью и гибкостью. Часто использует удары ногами и акцентирует внимание на защите.</p>
   </div>
 </div>
 
-<!-- Остальные модалки бойцов и боев остаются без изменений -->
+<div id="nasarov" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('nasarov')">&times;</span>
+    <h2>Арлан Насыров</h2>
+    <img src="images/nasarov.png" class="fighter-photo">
+    <p>Рекорд: 10 побед, 1 поражение</p>
+    <p>Вес: 50 кг</p>
+    <p>Описание: Сильный борец в партере. Любит контролировать бой и использовать удушающие приёмы.</p>
+  </div>
+</div>
+
+<div id="muhamedyarov" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('muhamedyarov')">&times;</span>
+    <h2>Данис Мухамедяров</h2>
+    <img src="images/muhamedyarov.png" class="fighter-photo">
+    <p>Рекорд: 7 побед, 2 поражения</p>
+    <p>Вес: 52 кг</p>
+    <p>Описание: Активно работает на стойке, использует мощные удары руками и ногами, хорошая защита от болевых приёмов.</p>
+  </div>
+</div>
+
+<div id="semenchenko" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('semenchenko')">&times;</span>
+    <h2>Семенченко Максим</h2>
+    <img src="images/semenchenko.png" class="fighter-photo">
+    <p>Рекорд: 6 побед, 1 поражение</p>
+    <p>Вес: 50 кг</p>
+    <p>Описание: Работает над техникой и контролем боя. Любит использовать разнообразные болевые и удушающие приёмы.</p>
+  </div>
+</div>
+
+<!-- Модалки боёв с видео -->
+<div id="fight1" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('fight1')">&times;</span>
+    <h2>Чекушов vs Престель</h2>
+    <iframe width="100%" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+    <p><strong>Победитель:</strong> Чекушов</p>
+    <p><strong>Метод:</strong> Нокаут</p>
+  </div>
+</div>
+
+<div id="fight2" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('fight2')">&times;</span>
+    <h2>Насыров vs Мухамедяров</h2>
+    <iframe width="100%" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+    <p><strong>Победитель:</strong> Мухамедяров</p>
+    <p><strong>Метод:</strong> Сабмишн</p>
+  </div>
+</div>
+
+<div id="fight3" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('fight3')">&times;</span>
+    <h2>Семенченко vs Чекушов</h2>
+    <iframe width="100%" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+    <p><strong>Победитель:</strong> Семенченко</p>
+    <p><strong>Метод:</strong> Решение судей</p>
+  </div>
+</div>
+
+<div id="fight4" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('fight4')">&times;</span>
+    <h2>Арлан vs Чекушов</h2>
+    <iframe width="100%" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+    <p><strong>Победитель:</strong> Арлан</p>
+    <p><strong>Метод:</strong> Choke-удушающий</p>
+  </div>
+</div>
+
+<!-- Модалки новостей -->
+<div id="news1" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('news1')">&times;</span>
+    <h2>Большой турнир UFC в Лас-Вегасе</h2>
+    <iframe width="100%" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+    <p>Дата: 20 декабря 2025</p>
+    <p>Описание: Турнир с участием всех топ-бойцов, ожидаются зрелищные поединки.</p>
+  </div>
+</div>
+
+<div id="news2" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('news2')">&times;</span>
+    <h2>Интервью с чемпионом</h2>
+    <iframe width="100%" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+    <p>Описание: Узнайте о подготовке к бою и планах чемпиона на следующий год.</p>
+  </div>
+</div>
 
 <script>
 // Вкладки
