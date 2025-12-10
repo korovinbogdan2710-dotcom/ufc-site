@@ -7,8 +7,8 @@
 <style>
 body {font-family: Arial, sans-serif; background:#111; color:#fff; margin:0; padding:0;}
 header {padding:20px; text-align:center; background:#222;}
-nav {display:flex; justify-content:center; background:#333; flex-wrap:wrap;}
-nav button {background:#444; border:none; color:#fff; padding:10px 20px; cursor:pointer; margin:5px; border-radius:5px; font-size:16px;}
+nav {display:flex; justify-content:center; background:#333;}
+nav button {background:#444; border:none; color:#fff; padding:10px 20px; cursor:pointer; margin:0 5px; border-radius:5px; font-size:16px;}
 nav button.active {background:#f00;}
 section {display:none; padding:20px;}
 section.active {display:block;}
@@ -22,21 +22,16 @@ button {margin-top:10px; padding:5px 10px; background:#f00; border:none; color:#
 
 /* Модальные окна */
 .modal {display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; overflow:auto; background: rgba(0,0,0,0.9);}
-.modal-content {background:#222; margin:5% auto; padding:20px; border:1px solid #444; width:80%; max-width:600px; border-radius:10px; color:#fff; position:relative;}
+.modal-content {background:#222; margin:10% auto; padding:20px; border:1px solid #444; width:80%; max-width:600px; border-radius:10px; color:#fff; position:relative;}
 .close {color:#f00; position:absolute; top:10px; right:20px; font-size:28px; font-weight:bold; cursor:pointer;}
 .close:hover {color:#fff;}
-.fighter-photo, .news-photo {width:100%; border-radius:8px; margin-bottom:15px;}
+.fighter-photo {width:100%; border-radius:8px; margin-bottom:15px;}
 
 /* Бои */
-.fights-table, .tournament-table {width:100%; max-width:800px; margin:0 auto; border-collapse:collapse;}
-.fights-table th, .fights-table td, .tournament-table th, .tournament-table td {border:1px solid #444; padding:10px; text-align:center;}
-.fights-table th, .tournament-table th {background:#222;}
-.fights-table td button, .tournament-table td button {padding:5px 8px; background:#f00; border:none; border-radius:4px; cursor:pointer; color:#fff;}
-
-/* Новости */
-.news-grid {display:flex; flex-wrap:wrap; gap:20px; justify-content:center;}
-.news-card {background:#222; border:1px solid #444; padding:10px; width:300px; text-align:center; border-radius:8px; cursor:pointer;}
-.news-card img {width:100%; border-radius:8px;}
+.fights-table {width:100%; max-width:800px; margin:0 auto; border-collapse:collapse;}
+.fights-table th, .fights-table td {border:1px solid #444; padding:10px; text-align:center;}
+.fights-table th {background:#222;}
+.fights-table td button {padding:5px 8px; background:#f00; border:none; border-radius:4px; cursor:pointer; color:#fff;}
 </style>
 </head>
 <body>
@@ -49,7 +44,6 @@ button {margin-top:10px; padding:5px 10px; background:#f00; border:none; color:#
   <button class="tab-btn active" data-tab="fighters">Бойцы</button>
   <button class="tab-btn" data-tab="referee">Главный судья</button>
   <button class="tab-btn" data-tab="fights">Бои и результаты</button>
-  <button class="tab-btn" data-tab="news">Новости</button>
 </nav>
 
 <!-- Вкладка Бойцы -->
@@ -110,7 +104,7 @@ button {margin-top:10px; padding:5px 10px; background:#f00; border:none; color:#
         <th>Бой</th>
         <th>Победитель</th>
         <th>Метод</th>
-        <th>Подробнее</th>
+        <th>Кнопка</th>
       </tr>
     </thead>
     <tbody>
@@ -142,26 +136,7 @@ button {margin-top:10px; padding:5px 10px; background:#f00; border:none; color:#
   </table>
 </section>
 
-<!-- Вкладка Новости -->
-<section id="news">
-  <h2>Новости UFC</h2>
-  <div class="news-grid">
-    <div class="news-card" onclick="openModal('news1')">
-      <img src="images/news1.jpg" alt="Новость 1">
-      <h3>Большой турнир UFC в Лас-Вегасе</h3>
-      <p>Дата: 20 декабря 2025</p>
-      <button>Подробнее</button>
-    </div>
-    <div class="news-card" onclick="openModal('news2')">
-      <img src="images/news2.jpg" alt="Новость 2">
-      <h3>Интервью с чемпионом</h3>
-      <p>Узнайте о подготовке к бою</p>
-      <button>Подробнее</button>
-    </div>
-  </div>
-</section>
-
-<!-- Модалки бойцов с описанием -->
+<!-- Модалки бойцов -->
 <div id="chekushov" class="modal">
   <div class="modal-content">
     <span class="close" onclick="closeModal('chekushov')">&times;</span>
@@ -169,7 +144,10 @@ button {margin-top:10px; padding:5px 10px; background:#f00; border:none; color:#
     <img src="images/chekushov.png" class="fighter-photo">
     <p>Рекорд: 10 побед, 2 поражения</p>
     <p>Вес: 75 кг</p>
-    <p>Описание: Каждый день тренируется по 3 часа, делая кардио и спарринги. Владеет техникой бокса и партером.</p>
+    <p>Главный судья: Богдан Коровин</p>
+    <p>Подробности тренировок и подготовки бойца: Каждый день поднимает пиццу вместо штанги для “силы духа”.
+Спарринги проводит с диванными подушками — никто не жалуется.
+Кардио: бегает за автобусом, когда опаздывает на тренировку.</p>
   </div>
 </div>
 
@@ -180,7 +158,10 @@ button {margin-top:10px; padding:5px 10px; background:#f00; border:none; color:#
     <img src="images/prestrel.png" class="fighter-photo">
     <p>Рекорд: 8 побед, 1 поражение</p>
     <p>Вес: 59 кг</p>
-    <p>Описание: Отличается скоростью и гибкостью. Часто использует удары ногами и акцентирует внимание на защите.</p>
+    <p>Главный судья: Богдан Коровин</p>
+    <p>Подробности тренировок и подготовки бойца:Тренируется с подушками и называет их “серьёзными противниками”.
+Разминается под музыку из детских мультфильмов, чтобы запутать противника.
+Каждый удар сопровождает громким криком: “За холодильник!”</p>
   </div>
 </div>
 
@@ -189,9 +170,12 @@ button {margin-top:10px; padding:5px 10px; background:#f00; border:none; color:#
     <span class="close" onclick="closeModal('nasarov')">&times;</span>
     <h2>Арлан Насыров</h2>
     <img src="images/nasarov.png" class="fighter-photo">
-    <p>Рекорд: 10 побед, 1 поражение</p>
+    <p>Рекорд: 10 побед, 1 поражения</p>
     <p>Вес: 50 кг</p>
-    <p>Описание: Сильный борец в партере. Любит контролировать бой и использовать удушающие приёмы.</p>
+    <p>Главный судья: Богдан Коровин</p>
+    <p>Подробности тренировок и подготовки бойца:Партер тренирует с котом — кот непредсказуемый противник.
+Каждый болевой приём сопровождает криком: “Сюрприз!”
+Разминка: танцует TikTok прямо перед спаррингом.</p>
   </div>
 </div>
 
@@ -202,7 +186,8 @@ button {margin-top:10px; padding:5px 10px; background:#f00; border:none; color:#
     <img src="images/muhamedyarov.png" class="fighter-photo">
     <p>Рекорд: 7 побед, 2 поражения</p>
     <p>Вес: 52 кг</p>
-    <p>Описание: Активно работает на стойке, использует мощные удары руками и ногами, хорошая защита от болевых приёмов.</p>
+    <p>Главный судья: Богдан Коровин</p>
+    <p>Подробности тренировок и подготовки бойца: Главный Хач этого ринга,он поподалься на приманки на хача не раз и теперь тренируеться что бы не поподать на них.</p>
   </div>
 </div>
 
@@ -213,18 +198,23 @@ button {margin-top:10px; padding:5px 10px; background:#f00; border:none; color:#
     <img src="images/semenchenko.png" class="fighter-photo">
     <p>Рекорд: 6 побед, 1 поражение</p>
     <p>Вес: 50 кг</p>
-    <p>Описание: Работает над техникой и контролем боя. Любит использовать разнообразные болевые и удушающие приёмы.</p>
+    <p>Главный судья: Богдан Коровин</p>
+    <p>Подробности тренировок и подготовки бойца:Растяжка: пытается достать конфету на верхней полке без стула.
+Партер: борется с котом за место на диване.
+Спарринги: с невидимым противником, чтобы улучшить воображение.</p>
   </div>
 </div>
 
-<!-- Модалки боёв с видео -->
+<!-- Модалки боев -->
 <div id="fight1" class="modal">
   <div class="modal-content">
     <span class="close" onclick="closeModal('fight1')">&times;</span>
     <h2>Чекушов vs Престель</h2>
-    <iframe width="100%" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
     <p><strong>Победитель:</strong> Чекушов</p>
     <p><strong>Метод:</strong> Нокаут</p>
+    <p><strong>Раунд:</strong> 2</p>
+    <p><strong>Главный судья:</strong> Богдан Коровин</p>
+    <p><strong>Детали боя:</strong> Чекушов атаковал в стойке, провёл мощный удар и нокаутировал Престеля.</p>
   </div>
 </div>
 
@@ -232,9 +222,11 @@ button {margin-top:10px; padding:5px 10px; background:#f00; border:none; color:#
   <div class="modal-content">
     <span class="close" onclick="closeModal('fight2')">&times;</span>
     <h2>Насыров vs Мухамедяров</h2>
-    <iframe width="100%" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
     <p><strong>Победитель:</strong> Мухамедяров</p>
     <p><strong>Метод:</strong> Сабмишн</p>
+    <p><strong>Раунд:</strong> 1</p>
+    <p><strong>Главный судья:</strong> Богдан Коровин</p>
+    <p><strong>Детали боя:</strong> Мухамедяров контролировал партер и провёл болевой приём, заставив Насырова сдаться.</p>
   </div>
 </div>
 
@@ -242,9 +234,11 @@ button {margin-top:10px; padding:5px 10px; background:#f00; border:none; color:#
   <div class="modal-content">
     <span class="close" onclick="closeModal('fight3')">&times;</span>
     <h2>Семенченко vs Чекушов</h2>
-    <iframe width="100%" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
     <p><strong>Победитель:</strong> Семенченко</p>
     <p><strong>Метод:</strong> Решение судей</p>
+    <p><strong>Раунд:</strong> 3</p>
+    <p><strong>Главный судья:</strong> Богдан Коровин</p>
+    <p><strong>Детали боя:</strong> Семенченко показывал технику и контроль боя, судьи отдали ему победу по очкам.</p>
   </div>
 </div>
 
@@ -252,29 +246,11 @@ button {margin-top:10px; padding:5px 10px; background:#f00; border:none; color:#
   <div class="modal-content">
     <span class="close" onclick="closeModal('fight4')">&times;</span>
     <h2>Арлан vs Чекушов</h2>
-    <iframe width="100%" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
     <p><strong>Победитель:</strong> Арлан</p>
     <p><strong>Метод:</strong> Choke-удушающий</p>
-  </div>
-</div>
-
-<!-- Модалки новостей -->
-<div id="news1" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal('news1')">&times;</span>
-    <h2>Большой турнир UFC в Лас-Вегасе</h2>
-    <iframe width="100%" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-    <p>Дата: 20 декабря 2025</p>
-    <p>Описание: Турнир с участием всех топ-бойцов, ожидаются зрелищные поединки.</p>
-  </div>
-</div>
-
-<div id="news2" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal('news2')">&times;</span>
-    <h2>Интервью с чемпионом</h2>
-    <iframe width="100%" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-    <p>Описание: Узнайте о подготовке к бою и планах чемпиона на следующий год.</p>
+    <p><strong>Раунд:</strong> 2</p>
+    <p><strong>Главный судья:</strong> Богдан Коровин</p>
+    <p><strong>Детали боя:</strong> Арлан контролировал бой и сумел выполнить эффективный удушающий приём, победив Чекушова во втором раунде.</p>
   </div>
 </div>
 
