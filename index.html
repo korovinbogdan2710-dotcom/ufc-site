@@ -1,55 +1,290 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UFC Fight Hub</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>UFC</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body {font-family: Arial, sans-serif; background:#111; color:#fff; margin:0; padding:0;}
+header {padding:20px; text-align:center; background:#222;}
+nav {display:flex; justify-content:center; background:#333;}
+nav button {background:#444; border:none; color:#fff; padding:10px 20px; cursor:pointer; margin:0 5px; border-radius:5px; font-size:16px;}
+nav button.active {background:#f00;}
+section {display:none; padding:20px;}
+section.active {display:block;}
+
+/* Бойцы */
+.fighters-grid {display:flex; flex-wrap:wrap; justify-content:center; gap:20px;}
+.fighter-card {background:#222; border:1px solid #444; padding:10px; width:250px; text-align:center; color:#fff; border-radius:8px; transition: transform 0.2s; cursor:pointer;}
+.fighter-card:hover {transform:scale(1.05);}
+.fighter-card img {width:100%; border-radius:8px;}
+button {margin-top:10px; padding:5px 10px; background:#f00; border:none; color:#fff; cursor:pointer; border-radius:5px;}
+
+/* Модальные окна */
+.modal {display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; overflow:auto; background: rgba(0,0,0,0.9);}
+.modal-content {background:#222; margin:10% auto; padding:20px; border:1px solid #444; width:80%; max-width:600px; border-radius:10px; color:#fff; position:relative;}
+.close {color:#f00; position:absolute; top:10px; right:20px; font-size:28px; font-weight:bold; cursor:pointer;}
+.close:hover {color:#fff;}
+.fighter-photo {width:100%; border-radius:8px; margin-bottom:15px;}
+
+/* Бои */
+.fights-table {width:100%; max-width:800px; margin:0 auto; border-collapse:collapse;}
+.fights-table th, .fights-table td {border:1px solid #444; padding:10px; text-align:center;}
+.fights-table th {background:#222;}
+.fights-table td button {padding:5px 8px; background:#f00; border:none; border-radius:4px; cursor:pointer; color:#fff;}
+</style>
 </head>
 <body>
 
-    <!-- HEADER -->
-    <header class="header">
-        <div class="logo">UFC<span>HUB</span></div>
-        <nav class="nav">
-            <a href="#fights">Бои</a>
-            <a href="#fighters">Бойцы</a>
-            <a href="#news">Новости</a>
-        </nav>
-    </header>
+<header>
+  <h1>UFC</h1>
+</header>
 
-    <!-- HERO -->
-    <section class="hero">
-        <h1>Добро пожаловать на UFC HUB</h1>
-        <p>Последние новости, бойцы, турниры и статистика.</p>
-        <button class="cta-btn" onclick="scrollToFights()">Смотреть бои</button>
-    </section>
+<nav>
+  <button class="tab-btn active" data-tab="fighters">Бойцы</button>
+  <button class="tab-btn" data-tab="referee">Главный судья</button>
+  <button class="tab-btn" data-tab="fights">Бои и результаты</button>
+</nav>
 
-    <!-- UPCOMING FIGHTS -->
-    <section id="fights" class="section">
-        <h2>Предстоящие бои</h2>
-        <div id="fightsList" class="cards-grid"></div>
-        <button class="add-btn" onclick="openFightModal()">Добавить бой</button>
-    </section>
+<!-- Вкладка Бойцы -->
+<section id="fighters" class="active">
+<div class="fighters-grid">
 
-    <!-- TOP FIGHTERS -->
-    <section id="fighters" class="section">
-        <h2>Лучшие бойцы</h2>
-        <div id="fightersList" class="cards-grid"></div>
-        <button class="add-btn" onclick="openFighterModal()">Добавить бойца</button>
-    </section>
+  <div class="fighter-card" onclick="openModal('chekushov')">
+    <img src="images/chekushov.png" alt="Чекушов Никита">
+    <h3>Чекушов Никита</h3>
+    <p>Вес 75 кг</p>
+    <button>Подробнее</button>
+  </div>
 
-    <!-- NEWS -->
-    <section id="news" class="section">
-        <h2>Новости</h2>
-        <div id="newsList" class="news-grid"></div>
-        <button class="add-btn" onclick="openNewsModal()">Добавить новость</button>
-    </section>
+  <div class="fighter-card" onclick="openModal('prestrel')">
+    <img src="images/prestrel.png" alt="Никита Престель">
+    <h3>Никита Престель</h3>
+    <p>Вес 59 кг</p>
+    <button>Подробнее</button>
+  </div>
 
-    <!-- MODALS -->
-    <div id="modal-container"></div>
+  <div class="fighter-card" onclick="openModal('nasarov')">
+    <img src="images/nasarov.png" alt="Арлан Насыров">
+    <h3>Арлан Насыров</h3>
+    <p>Вес 50 кг</p>
+    <button>Подробнее</button>
+  </div>
 
-    <script src="scripts.js"></script>
+  <div class="fighter-card" onclick="openModal('muhamedyarov')">
+    <img src="images/muhamedyarov.png" alt="Данис Мухамедяров">
+    <h3>Данис Мухамедяров</h3>
+    <p>Вес 52 кг</p>
+    <button>Подробнее</button>
+  </div>
+
+  <div class="fighter-card" onclick="openModal('semenchenko')">
+    <img src="images/semenchenko.png" alt="Семенченко Максим">
+    <h3>Семенченко Максим</h3>
+    <p>Вес 50 кг</p>
+    <button>Подробнее</button>
+  </div>
+
+</div>
+</section>
+
+<!-- Вкладка Главный судья -->
+<section id="referee">
+  <h2>Главный судья: Богдан Коровин</h2>
+  <img src="images/korovin.png" alt="Богдан Коровин" style="width:300px; border-radius:10px; display:block; margin:10px auto;">
+  <p>Богдан Коровин — главный судья турниров UFC. Отвечает за соблюдение правил, принимает решения о победителях и обеспечивает честное проведение боёв. Опытный судья с международной практикой.</p>
+</section>
+
+<!-- Вкладка Бои и результаты -->
+<section id="fights">
+  <h2>Бои и результаты</h2>
+  <table class="fights-table">
+    <thead>
+      <tr>
+        <th>Бой</th>
+        <th>Победитель</th>
+        <th>Метод</th>
+        <th>Кнопка</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Чекушов vs Престель</td>
+        <td>Чекушов</td>
+        <td>Нокаут</td>
+        <td><button onclick="openModal('fight1')">Подробнее</button></td>
+      </tr>
+      <tr>
+        <td>Насыров vs Мухамедяров</td>
+        <td>Мухамедяров</td>
+        <td>Сабмишн</td>
+        <td><button onclick="openModal('fight2')">Подробнее</button></td>
+      </tr>
+      <tr>
+        <td>Семенченко vs Чекушов</td>
+        <td>Семенченко</td>
+        <td>Решение судей</td>
+        <td><button onclick="openModal('fight3')">Подробнее</button></td>
+      </tr>
+      <tr>
+        <td>Арлан vs Чекушов</td>
+        <td>Арлан</td>
+        <td>Choke-удушающий</td>
+        <td><button onclick="openModal('fight4')">Подробнее</button></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Модалки бойцов -->
+<div id="chekushov" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('chekushov')">&times;</span>
+    <h2>Чекушов Никита</h2>
+    <img src="images/chekushov.png" class="fighter-photo">
+    <p>Рекорд: 10 побед, 2 поражения</p>
+    <p>Вес: 75 кг</p>
+    <p>Главный судья: Богдан Коровин</p>
+    <p>Подробности тренировок и подготовки бойца: Каждый день поднимает пиццу вместо штанги для “силы духа”.
+
+Спарринги проводит с диванными подушками — никто не жалуется.
+
+Кардио: бегает за автобусом, когда опаздывает на тренировку.</p>
+  </div>
+</div>
+
+<div id="prestrel" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('prestrel')">&times;</span>
+    <h2>Никита Престель</h2>
+    <img src="images/prestrel.png" class="fighter-photo">
+    <p>Рекорд: 8 побед, 1 поражение</p>
+    <p>Вес: 59 кг</p>
+    <p>Главный судья: Богдан Коровин</p>
+    <p>Подробности тренировок и подготовки бойца:Тренируется с подушками и называет их “серьёзными противниками”.
+
+Разминается под музыку из детских мультфильмов, чтобы запутать противника.
+
+Каждый удар сопровождает громким криком: “За холодильник!”</p>
+  </div>
+</div>
+
+<div id="nasarov" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('nasarov')">&times;</span>
+    <h2>Арлан Насыров</h2>
+    <img src="images/nasarov.png" class="fighter-photo">
+    <p>Рекорд: 9 побед, 3 поражения</p>
+    <p>Вес: 50 кг</p>
+    <p>Главный судья: Богдан Коровин</p>
+    <p>Подробности тренировок и подготовки бойца:Партер тренирует с котом — кот непредсказуемый противник.
+
+Каждый болевой приём сопровождает криком: “Сюрприз!”
+
+Разминка: танцует TikTok прямо перед спаррингом.</p>
+  </div>
+</div>
+
+<div id="muhamedyarov" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('muhamedyarov')">&times;</span>
+    <h2>Данис Мухамедяров</h2>
+    <img src="images/muhamedyarov.png" class="fighter-photo">
+    <p>Рекорд: 7 побед, 2 поражения</p>
+    <p>Вес: 52 кг</p>
+    <p>Главный судья: Богдан Коровин</p>
+    <p>Подробности тренировок и подготовки бойца: Главный Хач этого ринга,он поподалься на приманки на хача не раз и теперь тренируеться что бы не поподать на них.</p>
+  </div>
+</div>
+
+<div id="semenchenko" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('semenchenko')">&times;</span>
+    <h2>Семенченко Максим</h2>
+    <img src="images/semenchenko.png" class="fighter-photo">
+    <p>Рекорд: 6 побед, 1 поражение</p>
+    <p>Вес: 50 кг</p>
+    <p>Главный судья: Богдан Коровин</p>
+    <p>Подробности тренировок и подготовки бойца:Растяжка: пытается достать конфету на верхней полке без стула.
+
+Партер: борется с котом за место на диване.
+
+Спарринги: с невидимым противником, чтобы улучшить воображение.</p>
+  </div>
+</div>
+
+<!-- Модалки боев -->
+<div id="fight1" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('fight1')">&times;</span>
+    <h2>Чекушов vs Престель</h2>
+    <p><strong>Победитель:</strong> Чекушов</p>
+    <p><strong>Метод:</strong> Нокаут</p>
+    <p><strong>Раунд:</strong> 2</p>
+    <p><strong>Главный судья:</strong> Богдан Коровин</p>
+    <p><strong>Детали боя:</strong> Чекушов атаковал в стойке, провёл мощный удар и нокаутировал Престеля.</p>
+  </div>
+</div>
+
+<div id="fight2" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('fight2')">&times;</span>
+    <h2>Насыров vs Мухамедяров</h2>
+    <p><strong>Победитель:</strong> Мухамедяров</p>
+    <p><strong>Метод:</strong> Сабмишн</p>
+    <p><strong>Раунд:</strong> 1</p>
+    <p><strong>Главный судья:</strong> Богдан Коровин</p>
+    <p><strong>Детали боя:</strong> Мухамедяров контролировал партер и провёл болевой приём, заставив Насырова сдаться.</p>
+  </div>
+</div>
+
+<div id="fight3" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('fight3')">&times;</span>
+    <h2>Семенченко vs Чекушов</h2>
+    <p><strong>Победитель:</strong> Семенченко</p>
+    <p><strong>Метод:</strong> Решение судей</p>
+    <p><strong>Раунд:</strong> 3</p>
+    <p><strong>Главный судья:</strong> Богдан Коровин</p>
+    <p><strong>Детали боя:</strong> Семенченко показывал технику и контроль боя, судьи отдали ему победу по очкам.</p>
+  </div>
+</div>
+
+<div id="fight4" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('fight4')">&times;</span>
+    <h2>Арлан vs Чекушов</h2>
+    <p><strong>Победитель:</strong> Арлан</p>
+    <p><strong>Метод:</strong> Choke-удушающий</p>
+    <p><strong>Раунд:</strong> 2</p>
+    <p><strong>Главный судья:</strong> Богдан Коровин</p>
+    <p><strong>Детали боя:</strong> Арлан контролировал бой и сумел выполнить эффективный удушающий приём, победив Чекушова во втором раунде.</p>
+  </div>
+</div>
+
+<script>
+// Вкладки
+const tabBtns = document.querySelectorAll('.tab-btn');
+const sections = document.querySelectorAll('section');
+
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const tab = btn.dataset.tab;
+    sections.forEach(s => s.classList.remove('active'));
+    document.getElementById(tab).classList.add('active');
+  });
+});
+
+// Модалки
+function openModal(id){ document.getElementById(id).style.display='block'; }
+function closeModal(id){ document.getElementById(id).style.display='none'; }
+window.onclick = function(event){
+  const modals = document.querySelectorAll('.modal');
+  modals.forEach(modal => { if(event.target === modal) modal.style.display='none'; });
+}
+</script>
 
 </body>
 </html>

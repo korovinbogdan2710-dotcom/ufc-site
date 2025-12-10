@@ -1,16 +1,103 @@
-function addFighter() {
-    const nameInput = document.getElementById('fighter-name');
-    const name = nameInput.value.trim();
-    if (name === "") {
-        alert("Введите имя бойца!");
-        return;
-    }
+const cards = document.getElementById('cards');
+const addFighterBtn = document.getElementById('addFighterBtn');
+const modal = document.getElementById('modal');
+const fighterForm = document.getElementById('fighterForm');
+const closeModal = document.getElementById('closeModal');
+const searchInput = document.getElementById('search');
+const weightFilter = document.getElementById('weightFilter');
+const sortBy = document.getElementById('sortBy');
+const darkToggle = document.getElementById('darkToggle');
 
-    const li = document.createElement('li');
-    li.textContent = name;
+let fighters = JSON.parse(localStorage.getItem('ufc_fighters_v2') || '[]');
 
-    const list = document.getElementById('fighter-list');
-    list.appendChild(li);
+// helper functions
+const save = () => localStorage.setItem('ufc_fighters_v2', JSON.stringify(fighters));
+const uid = () => Math.random().toString(36).slice(2, 9);
 
-    nameInput.value = "";
+// sample data
+if(!fighters.length){
+  fighters = [
+    {id: uid(), name:'Иван Петров', country:'RU', weight:'heavy', rating:85, photo:''},
+    {id: uid(), name:'Miguel Santos', country:'BR', weight:'welter', rating:78, photo:''},
+    {id: uid(), name:'Lee Chan', country:'KR', weight:'light', rating:90, photo:''}
+  ];
+  save();
 }
+
+// render cards
+function render() {
+  const q = searchInput.value.toLowerCase();
+  const weight = weightFilter.value;
+  const sort = sortBy.value;
+  let list = fighters.slice();
+  if(weight !== 'all') list = list.filter(f => f.weight === weight);
+  if(q) list = list.filter(f => f.name.toLowerCase().includes(q));
+  if(sort === 'name') list.sort((a,b)=>a.name.localeCompare(b.name));
+  if(sort === 'rating') list.sort((a,b)=>b.rating-a.rating);
+
+  cards.innerHTML = '';
+  for(const f of list){
+    const el = document.createElement('div');
+    el.className = 'card';
+    el.innerHTML = `
+      <img class="photo" src="${f.photo || 'https://via.placeholder.com/400x240?text=Fighter'}" alt="${f.name}">
+      <h4>${f.name} <span class="badge">${f.weight}</span></h4>
+      <p>${f.country} • Рейтинг: ${f.rating || '—'}</p>
+      <div style="margin-top:8px;display:flex;gap:8px;">
+        <button class="btn" data-id="${f.id}" data-act="edit">Редактировать</button>
+        <button class="btn" data-id="${f.id}" data-act="del">Удалить</button>
+      </div>
+    `;
+    cards.appendChild(el);
+  }
+}
+
+// events
+addFighterBtn.addEventListener('click', ()=> modal.classList.remove('hidden'));
+closeModal.addEventListener('click', ()=> modal.classList.add('hidden'));
+searchInput.addEventListener('input', render);
+weightFilter.addEventListener('change', render);
+sortBy.addEventListener('change', render);
+darkToggle.addEventListener('click', ()=> document.body.classList.toggle('dark'));
+
+cards.addEventListener('click', e=>{
+  const btn = e.target.closest('button');
+  if(!btn) return;
+  const id = btn.dataset.id;
+  const act = btn.dataset.act;
+  if(act === 'del'){
+    fighters = fighters.filter(f=>f.id!==id); save(); render();
+  }
+  if(act === 'edit'){
+    const f = fighters.find(x=>x.id===id);
+    if(!f) return;
+    modal.classList.remove('hidden');
+    fighterForm.name.value = f.name;
+    fighterForm.country.value = f.country;
+    fighterForm.weight.value = f.weight;
+    fighterForm.rating.value = f.rating;
+    fighterForm.photo.value = f.photo;
+    fighterForm.dataset.editId = id;
+  }
+});
+
+fighterForm.addEventListener('submit', e=>{
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(fighterForm).entries());
+  if(fighterForm.dataset.editId){
+    const id = fighterForm.dataset.editId;
+    const idx = fighters.findIndex(x=>x.id===id);
+    fighters[idx] = {...fighters[idx], ...data, rating: Number(data.rating||0)};
+    delete fighterForm.dataset.editId;
+  } else {
+    fighters.push({id:uid(), name:data.name, country:data.country, weight:data.weight, rating:Number(data.rating||0), photo:data.photo});
+  }
+  fighterForm.reset();
+  modal.classList.add('hidden');
+  save();
+  render();
+});
+
+modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.classList.add('hidden'); });
+
+render();
