@@ -36,9 +36,11 @@ function render() {
   if(sort === 'rating') list.sort((a,b)=>b.rating-a.rating);
 
   cards.innerHTML = '';
-  for(const f of list){
+  list.forEach((f,i)=>{
     const el = document.createElement('div');
     el.className = 'card';
+    el.style.opacity = 0;
+    el.style.transform = 'translateY(20px)';
     el.innerHTML = `
       <img class="photo" src="${f.photo || 'https://via.placeholder.com/400x240?text=Fighter'}" alt="${f.name}">
       <h4>${f.name} <span class="badge">${f.weight}</span></h4>
@@ -49,7 +51,14 @@ function render() {
       </div>
     `;
     cards.appendChild(el);
-  }
+
+    // Новогоднее плавное появление с задержкой
+    setTimeout(() => {
+      el.style.transition = 'all 0.5s ease';
+      el.style.opacity = 1;
+      el.style.transform = 'translateY(0)';
+    }, i*100);
+  });
 }
 
 // events
@@ -101,3 +110,48 @@ fighterForm.addEventListener('submit', e=>{
 modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.classList.add('hidden'); });
 
 render();
+
+/* === СНЕГ на странице === */
+function createSnowflake(){
+  const s=document.createElement("div");
+  s.className="snowflake";
+  s.innerHTML="❄️";
+  const size=8+Math.random()*22;
+  s.style.fontSize=size+"px";
+  s.style.left=Math.random()*window.innerWidth+"px";
+  s.style.opacity=0.3+Math.random()*0.7;
+  const duration=4+Math.random()*6;
+  s.style.transition=`transform ${duration}s linear, opacity ${duration}s linear`;
+  document.body.appendChild(s);
+  requestAnimationFrame(()=>{
+    s.style.transform=`translateY(${window.innerHeight+30}px) translateX(${Math.random()*100-50}px)`;
+    s.style.opacity=0;
+  });
+  setTimeout(()=>s.remove(), duration*1000);
+}
+setInterval(createSnowflake, 150);
+
+/* === Анимация главного экрана (если есть hero) === */
+const heroTitle = document.querySelector('.hero-newyear h1');
+if(heroTitle){
+  heroTitle.style.transition = 'text-shadow 2s ease-in-out';
+  setInterval(()=> {
+    heroTitle.style.textShadow = '0 0 35px #4fc3f7';
+    setTimeout(()=> heroTitle.style.textShadow='0 0 20px #4fc3f7',1000);
+  },2000);
+}
+
+document.querySelector('.hero-btn').addEventListener('click', function(e){
+  e.preventDefault(); // отменяем стандартное поведение ссылки
+
+  // Находим кнопку вкладки "Бои"
+  const fightsTab = document.querySelector('.tab-btn[data-tab="fights"]');
+  if(fightsTab){
+    fightsTab.click(); // Симулируем клик по вкладке
+    // Плавный скролл до секции
+    const fightsSection = document.getElementById('fights');
+    if(fightsSection){
+      fightsSection.scrollIntoView({behavior: 'smooth'});
+    }
+  }
+});

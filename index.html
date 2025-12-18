@@ -3,42 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <title>UFC</title>
-<link rel="stylesheet" href="style.css">
 <style>
-/* === Базовые стили (старый вид) === */
-body {font-family: Arial, sans-serif; background:#111; color:#fff; margin:0; padding:0;}
+/* === Базовые стили === */
+body {font-family: Arial, sans-serif; background:#111; color:#fff; margin:0; padding:0; scroll-behavior: smooth;}
 header {padding:20px; text-align:center; background:#222;}
-nav {display:flex; justify-content:center; background:#333;}
-nav button {background:#444; border:none; color:#fff; padding:10px 20px; cursor:pointer; margin:0 5px; border-radius:5px; font-size:16px;}
+nav {display:flex; justify-content:center; background:#333; flex-wrap:wrap;}
+nav button {background:#444; border:none; color:#fff; padding:10px 20px; cursor:pointer; margin:0 5px 5px 5px; border-radius:5px; font-size:16px;}
 nav button.active {background:#f00;}
 section {display:none; padding:20px;}
 section.active {display:block;}
 
-/* Бойцы */
+/* === НОВОГОДНИЙ HERO === */
+.hero-newyear {
+  padding: 90px 20px;
+  text-align: center;
+  background: radial-gradient(circle at top, #1a2f3f, #0b0b0b);
+  border-bottom: 2px solid #4fc3f7;
+}
+.hero-newyear h1 {font-size:44px; color:#e0f7ff; text-shadow:0 0 20px #4fc3f7;}
+.hero-newyear p {font-size:18px; color:#cbd5e1;}
+.hero-btn {display:inline-block; margin-top:25px; padding:14px 34px; background:#e53935; color:#fff; border-radius:30px; text-decoration:none; font-weight:bold; box-shadow:0 0 25px rgba(229,57,53,0.7); transition:0.3s;}
+.hero-btn:hover {transform: scale(1.07); box-shadow: 0 0 40px rgba(229,57,53,1);}
+
+/* === СНЕГ === */
+.snowflake {position: fixed; top: -10px; color: #fff; pointer-events: none; z-index: 9999; opacity: 0.8; user-select: none;}
+
+/* === Бойцы === */
 .fighters-grid {display:flex; flex-wrap:wrap; justify-content:center; gap:20px;}
 .fighter-card {background:#222; border:1px solid #444; padding:10px; width:250px; text-align:center; color:#fff; border-radius:8px; transition: transform 0.2s; cursor:pointer;}
 .fighter-card:hover {transform:scale(1.05);}
 .fighter-card img {width:100%; border-radius:8px;}
 
-/* Модальные окна */
+/* === Модальные окна === */
 .modal {display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; overflow:auto; background: rgba(0,0,0,0.9);}
 .modal-content {background:#222; margin:10% auto; padding:20px; border:1px solid #444; width:80%; max-width:600px; border-radius:10px; color:#fff; position:relative;}
 .close {color:#f00; position:absolute; top:10px; right:20px; font-size:28px; font-weight:bold; cursor:pointer;}
 .close:hover {color:#fff;}
 .fighter-photo {width:100%; border-radius:8px; margin-bottom:15px;}
 
-/* Бои */
+/* === Бои === */
 .fights-table {width:100%; max-width:800px; margin:0 auto; border-collapse:collapse;}
 .fights-table th, .fights-table td {border:1px solid #444; padding:10px; text-align:center;}
 .fights-table th {background:#222;}
 
-/* Новости */
+/* === Новости === */
 .news-grid {display:flex; flex-wrap:wrap; gap:20px; justify-content:center;}
 .news-card {background:#222; border:1px solid #444; border-radius:8px; padding:10px; width:250px; text-align:center; cursor:pointer; transition:transform 0.2s;}
 .news-card:hover {transform:scale(1.05);}
 .news-card img {width:100%; border-radius:8px; margin-bottom:10px;}
 
-/* === Секция сравнения (новая) === */
+/* === Сравнение === */
 .compare-wrap {max-width:1000px; margin:20px auto; padding:16px; background:#0f1215; border:1px solid #333; border-radius:10px;}
 .compare-title {text-align:center; margin-bottom:12px;}
 .compare-controls {display:flex; gap:12px; justify-content:center; align-items:center; flex-wrap:wrap; margin-bottom:14px;}
@@ -50,13 +64,30 @@ section.active {display:block;}
 .compare-row {display:flex; justify-content:space-between; margin:6px 0; color:#cbd5e1;}
 .small-muted {color:#97a0ab; font-size:13px;}
 @media (max-width:760px){ .compare-card{width:100%;} .compare-controls{flex-direction:column;} }
+
+/* === СЕКРЕТНЫЙ БОНУС === */
+#secretBonus {display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#fffae5; color:#222; padding:30px; border-radius:12px; text-align:center; z-index:9999; box-shadow:0 0 25px #fff;}
+#secretBonus button {padding:10px 20px; border:none; background:#ff3b3b; color:#fff; border-radius:6px; cursor:pointer;}
+
+/* === ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ === */
+#userProfile {display:none; position:fixed; top:10px; right:10px; background:#222; padding:12px; border-radius:8px; border:1px solid #444; z-index:9999;}
+#userProfile h4{margin:0 0 4px 0;} #userProfile p{margin:4px 0;}
+#userProfile button{padding:6px 12px; background:#ff3b3b; color:#fff; border:none; border-radius:6px; cursor:pointer;}
+
+/* === МОДАЛКА АВТОРИЗАЦИИ === */
+#authModal .modal-content input{width:80%; padding:8px; margin:6px 0;}
+#authModal .modal-content button{margin:6px 0; padding:8px 12px;}
 </style>
 </head>
 <body>
 
-<header>
-  <h1>UFC</h1>
-</header>
+<header><h1>UFC</h1></header>
+
+<div class="hero-newyear">
+  <h1>❄️ New Year Fight Night</h1>
+  <p>Последние бои года. Зима. Ринг. Без пощады.</p>
+  <a href="#" class="hero-btn" onclick="goToFights(event)">🔥 Перейти к боям</a>
+</div>
 
 <nav>
   <button class="tab-btn active" data-tab="fighters">Бойцы</button>
@@ -64,264 +95,179 @@ section.active {display:block;}
   <button class="tab-btn" data-tab="fights">Бои и результаты</button>
   <button class="tab-btn" data-tab="news">Новости UFC</button>
   <button class="tab-btn" data-tab="compare">Сравнение бойцов</button>
+  <button onclick="openModal('authModal')">Вход / Регистрация</button>
 </nav>
 
-<!-- Вкладка Бойцы -->
 <section id="fighters" class="active">
   <div class="fighters-grid">
-
-    <div class="fighter-card" data-id="chekushov" onclick="openModal('chekushov')">
+    <div class="fighter-card" onclick="openModal('chekushov')">
       <img src="images/chekushov.png" alt="Чекушов Никита">
-      <h3>Чекушов Никита</h3>
-      <p>Вес 75 кг</p>
-      <p>Описание: Опытный боец с хорошей техникой нокаутов.</p>
+      <h3>Чекушов Никита</h3><p>Вес 75 кг</p><p>Опытный боец с хорошей техникой нокаутов.</p>
     </div>
-
-    <div class="fighter-card" data-id="prestrel" onclick="openModal('prestrel')">
+    <div class="fighter-card" onclick="openModal('prestrel')">
       <img src="images/prestrel.png" alt="Никита Престель">
-      <h3>Никита Престель</h3>
-      <p>Вес 59 кг</p>
-      <p>Описание: Молодой и быстрый боец, известен своими сабмишнами.</p>
+      <h3>Никита Престель</h3><p>Вес 59 кг</p><p>Молодой и быстрый боец, известен своими сабмишнами.</p>
     </div>
-
-    <div class="fighter-card" data-id="nasarov" onclick="openModal('nasarov')">
+    <div class="fighter-card" onclick="openModal('nasarov')">
       <img src="images/nasarov.png" alt="Арлан Насыров">
-      <h3>Арлан Насыров</h3>
-      <p>Вес 50 кг</p>
-      <p>Описание: Отлично владеет партером, силен в болевых приемах.</p>
+      <h3>Арлан Насыров</h3><p>Вес 50 кг</p><p>Отлично владеет партером, силен в болевых приемах.</p>
     </div>
-
-    <div class="fighter-card" data-id="muhamedyarov" onclick="openModal('muhamedyarov')">
+    <div class="fighter-card" onclick="openModal('muhamedyarov')">
       <img src="images/muhamedyarov.png" alt="Данис Мухамедяров">
-      <h3>Данис Мухамедяров</h3>
-      <p>Вес 52 кг</p>
-      <p>Описание: Техничный боец с хорошей выносливостью и стратегией.</p>
+      <h3>Данис Мухамедяров</h3><p>Вес 52 кг</p><p>Техничный боец с хорошей выносливостью и стратегией.</p>
     </div>
-
-    <div class="fighter-card" data-id="semenchenko" onclick="openModal('semenchenko')">
+    <div class="fighter-card" onclick="openModal('semenchenko')">
       <img src="images/semenchenko.png" alt="Семенченко Максим">
-      <h3>Семенченко Максим</h3>
-      <p>Вес 50 кг</p>
-      <p>Описание: Мастер контроля боя, часто выигрывает по решению судей.</p>
+      <h3>Семенченко Максим</h3><p>Вес 50 кг</p><p>Мастер контроля боя, часто выигрывает по решению судей.</p>
     </div>
-
   </div>
 </section>
 
-<!-- Вкладка Главный судья -->
 <section id="referee">
   <h2>Главный судья: Богдан Коровин</h2>
   <img src="images/korovin.png" alt="Богдан Коровин" style="width:300px; border-radius:10px; display:block; margin:10px auto;">
-  <p>Богдан Коровин — главный судья турниров UFC. Отвечает за соблюдение правил, принимает решения о победителях и обеспечивает честное проведение боёв. Опытный судья с международной практикой.</p>
+  <p>Богдан Коровин — главный судья турниров UFC. Отвечает за соблюдение правил и честность боев.</p>
 </section>
 
-<!-- Вкладка Бои и результаты -->
 <section id="fights">
   <h2>Бои и результаты</h2>
-
-  <!-- === ПРОГНОЗ НА БОЙ (НОВОЕ) === -->
   <div style="max-width:600px;margin:20px auto;padding:15px;background:#181818;border:1px solid #444;border-radius:10px;text-align:center;">
     <h3>Прогноз на бой: Арлан vs Чекушов</h3>
-
     <button onclick="voteWinner('arlan')" style="margin:10px;padding:10px 15px;">Арлан</button>
     <button onclick="voteWinner('chekushov')" style="margin:10px;padding:10px 15px;">Чекушов</button>
-
     <p id="voteResult" style="margin-top:10px;color:#9aa4b2;"></p>
   </div>
-
   <table class="fights-table">
     <thead>
-      <tr>
-        <th>Бой</th>
-        <th>Победитель</th>
-        <th>Метод</th>
-      </tr>
+      <tr><th>Бой</th><th>Победитель</th><th>Метод</th></tr>
     </thead>
     <tbody>
-      <tr onclick="openModal('fight1')">
-        <td>Чекушов vs Престель</td>
-        <td>Чекушов</td>
-        <td>Нокаут</td>
-      </tr>
-      <tr onclick="openModal('fight2')">
-        <td>Насыров vs Мухамедяров</td>
-        <td>Мухамедяров</td>
-        <td>Сабмишн</td>
-      </tr>
-      <tr onclick="openModal('fight3')">
-        <td>Семенченко vs Чекушов</td>
-        <td>Семенченко</td>
-        <td>Решение судей</td>
-      </tr>
-      <tr onclick="openModal('fight4')">
-        <td>Арлан vs Чекушов</td>
-        <td>Арлан</td>
-        <td>Choke-удушающий</td>
-      </tr>
+      <tr><td>Чекушов vs Престель</td><td>Чекушов</td><td>Нокаут</td></tr>
+      <tr><td>Насыров vs Мухамедяров</td><td>Мухамедяров</td><td>Сабмишн</td></tr>
+      <tr><td>Семенченко vs Чекушов</td><td>Семенченко</td><td>Решение судей</td></tr>
+      <tr><td>Арлан vs Чекушов</td><td>Арлан</td><td>Choke-удушающий</td></tr>
     </tbody>
   </table>
 </section>
 
-<!-- Вкладка Новости -->
 <section id="news">
   <h2>Новости UFC</h2>
   <div class="news-grid">
-    <div class="news-card" onclick="openModal('news1')">
-      <img src="images/news1.jpg" alt="Новость 1">
-      <h3>Анонс следующего турнира</h3>
-      <p>Турнир состоится через неделю, соперники готовятся и похоже нас ждёт сильный бой — ждите анонс бойцов.</p>
-    </div>
-    <div class="news-card" onclick="openModal('news2')">
-      <img src="images/news2.jpg" alt="Новость 2">
-      <h3>Интервью с чемпионом</h3>
-      <p>Чемпион делится секретами подготовки и стратегии: по его словам, подготовка к бою была самой сложной за всю карьеры.</p>
-    </div>
+    <div class="news-card"><img src="images/news1.jpg" alt="Новость 1"><h3>Анонс турнира</h3><p>Турнир через неделю. Готовьтесь!</p></div>
+    <div class="news-card"><img src="images/news2.jpg" alt="Новость 2"><h3>Интервью с чемпионом</h3><p>Чемпион делится секретами подготовки.</p></div>
   </div>
 </section>
 
-<!-- Вкладка Сравнение бойцов -->
 <section id="compare">
   <div class="compare-wrap">
-    <h2 class="compare-title">Сравнение бойцов (Face-to-Face)</h2>
+    <h2 class="compare-title">Сравнение бойцов</h2>
     <div class="compare-controls">
       <select id="fighterSelect1" class="compare-select"></select>
       <select id="fighterSelect2" class="compare-select"></select>
       <button id="compareBtn">Сравнить</button>
     </div>
-
     <div id="compareResult" class="compare-result" aria-hidden="true">
-      <div class="compare-card" id="compareCard1">
-        <!-- card content -->
-      </div>
-      <div class="compare-card" id="compareCard2">
-        <!-- card content -->
-      </div>
+      <div class="compare-card" id="compareCard1"></div>
+      <div class="compare-card" id="compareCard2"></div>
     </div>
   </div>
 </section>
 
-<!-- ====== Модалки бойцов, боёв, новостей (оставил без изменений) ====== -->
-<!-- ... здесь твои старые модалки ... -->
+<div id="secretBonus">
+  <h2>🎁 Секретный бонус!</h2>
+  <p>Вы получили +10 очков!</p>
+  <button onclick="closeBonus()">Закрыть</button>
+</div>
+
+<div id="userProfile">
+  <h4 id="profileName"></h4>
+  <p>🎄 Новогодние очки: <span id="profilePoints">0</span></p>
+  <button onclick="logoutUser()">Выйти</button>
+</div>
+
+<div id="authModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('authModal')">&times;</span>
+    <h2>Вход / Регистрация</h2>
+    <input type="text" id="username" placeholder="Имя пользователя"><br>
+    <button onclick="registerUser()">Зарегистрироваться</button>
+    <button onclick="loginUser()">Войти</button>
+    <p id="authMsg" style="color:#ff3b3b;"></p>
+  </div>
+</div>
 
 <script>
-/* ========== Вкладки (старая логика) ========== */
-const tabBtns = document.querySelectorAll('.tab-btn');
-const sections = document.querySelectorAll('section');
-
-tabBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    tabBtns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const tab = btn.dataset.tab;
-    sections.forEach(s => s.classList.remove('active'));
-    document.getElementById(tab).classList.add('active');
-  });
-});
-
-/* ========== Модалки (старая логика) ========== */
-function openModal(id){
-  const el = document.getElementById(id);
-  if(el) el.style.display = 'block';
-}
-function closeModal(id){
-  const el = document.getElementById(id);
-  if(el) el.style.display = 'none';
-}
-window.onclick = function(event){
-  const modals = document.querySelectorAll('.modal');
-  modals.forEach(modal => { if(event.target === modal) modal.style.display='none'; });
-}
-
-/* ========== Данные бойцов (централизованные для сравнения) ========== */
+// === Данные бойцов ===
 const FIGHTERS = [
-  {id:'chekushov', name:'Чекушов Никита', weight:'75 кг', record:'10-2', bio:'Каждый день поднимает пиццу вместо штанги...', photo:'images/chekushov.png', height:'180 см', age:26, style:'Ударная техника, нокаутирующий удар'},
-  {id:'prestrel', name:'Никита Престель', weight:'59 кг', record:'8-1', bio:'Тренируется с подушками...', photo:'images/prestrel.png', height:'168 см', age:22, style:'Быстрые комбинации, сабмишны'},
-  {id:'nasarov', name:'Арлан Насыров', weight:'50 кг', record:'10-1', bio:'Партер тренирует с котом...', photo:'images/nasarov.png', height:'165 см', age:20, style:'Партер, удушающие приёмы'},
-  {id:'muhamedyarov', name:'Данис Мухамедяров', weight:'52 кг', record:'7-2', bio:'Активно работает на стойке...', photo:'images/muhamedyarov.png', height:'172 см', age:24, style:'Стойка, выносливость'},
-  {id:'semenchenko', name:'Семенченко Максим', weight:'50 кг', record:'6-1', bio:'Растяжка: пытается достать конфету...', photo:'images/semenchenko.png', height:'168 см', age:23, style:'Контроль боя, техника'}
+  {id:'chekushov', name:'Чекушов Никита', weight:'75 кг', record:'10-2', bio:'Каждый день тренируется.', photo:'images/chekushov.png', height:'180 см', age:26, style:'Ударная техника'},
+  {id:'prestrel', name:'Никита Престель', weight:'59 кг', record:'8-1', bio:'Быстрый и техничный.', photo:'images/prestrel.png', height:'168 см', age:22, style:'Сабмишны'},
+  {id:'nasarov', name:'Арлан Насыров', weight:'50 кг', record:'10-1', bio:'Мастер партерных приемов.', photo:'images/nasarov.png', height:'165 см', age:20, style:'Партер'},
+  {id:'muhamedyarov', name:'Данис Мухамедяров', weight:'52 кг', record:'7-2', bio:'Стратег и выносливый.', photo:'images/muhamedyarov.png', height:'172 см', age:24, style:'Стойка'},
+  {id:'semenchenko', name:'Семенченко Максим', weight:'50 кг', record:'6-1', bio:'Контроль боя.', photo:'images/semenchenko.png', height:'168 см', age:23, style:'Контроль'}
 ];
 
-/* ========== Сравнение бойцов (новая логика) ========== */
-const sel1 = document.getElementById('fighterSelect1');
-const sel2 = document.getElementById('fighterSelect2');
-const compareBtn = document.getElementById('compareBtn');
-const compareResult = document.getElementById('compareResult');
-const card1 = document.getElementById('compareCard1');
-const card2 = document.getElementById('compareCard2');
+// === Сравнение бойцов ===
+const sel1=document.getElementById('fighterSelect1');
+const sel2=document.getElementById('fighterSelect2');
+const card1=document.getElementById('compareCard1');
+const card2=document.getElementById('compareCard2');
+FIGHTERS.forEach(f=>{sel1.appendChild(new Option(f.name,f.id)); sel2.appendChild(new Option(f.name,f.id));});
+sel1.selectedIndex=0; sel2.selectedIndex=1;
 
-function fillCompareSelectors(){
-  FIGHTERS.forEach(f => {
-    const o1 = document.createElement('option'); o1.value = f.id; o1.textContent = f.name;
-    const o2 = document.createElement('option'); o2.value = f.id; o2.textContent = f.name;
-    sel1.appendChild(o1); sel2.appendChild(o2);
-  });
-  if(sel1.options.length > 1){ sel1.selectedIndex = 0; sel2.selectedIndex = 1; }
-}
-fillCompareSelectors();
-
-function getFighterById(id){ return FIGHTERS.find(f=>f.id === id); }
-function renderCompareCard(element, fighter){
-  if(!fighter) { element.innerHTML = ''; return; }
-  element.innerHTML = `
-    <img src="${fighter.photo}" alt="${fighter.name}" style="width:100%; border-radius:8px; margin-bottom:8px;">
-    <h4>${fighter.name}</h4>
-    <div class="compare-row"><span class="small-muted">Вес</span><span>${fighter.weight}</span></div>
-    <div class="compare-row"><span class="small-muted">Рекорд</span><span>${fighter.record}</span></div>
-    <div class="compare-row"><span class="small-muted">Рост</span><span>${fighter.height}</span></div>
-    <div class="compare-row"><span class="small-muted">Возраст</span><span>${fighter.age}</span></div>
-    <div class="compare-row"><span class="small-muted">Стиль</span><span>${fighter.style}</span></div>
-    <p style="margin-top:8px; color:#cbd5e1;">${fighter.bio}</p>
-  `;
+function getFighterById(id){ return FIGHTERS.find(f=>f.id===id); }
+function renderCompareCard(el,f){ el.innerHTML=`<img src="${f.photo}" style="width:100%; border-radius:8px; margin-bottom:8px;"><h4>${f.name}</h4><div class="compare-row"><span class="small-muted">Вес</span><span>${f.weight}</span></div><div class="compare-row"><span class="small-muted">Рекорд</span><span>${f.record}</span></div><div class="compare-row"><span class="small-muted">Рост</span><span>${f.height}</span></div><div class="compare-row"><span class="small-muted">Возраст</span><span>${f.age}</span></div><div class="compare-row"><span class="small-muted">Стиль</span><span>${f.style}</span></div><p style="margin-top:8px; color:#cbd5e1;">${f.bio}</p>`;}
+document.getElementById('compareBtn').onclick=function(){
+  const f1=getFighterById(sel1.value), f2=getFighterById(sel2.value);
+  renderCompareCard(card1,f1); renderCompareCard(card2,f2); document.getElementById('compareResult').style.display='flex';
 }
 
-compareBtn.addEventListener('click', ()=>{
-  const id1 = sel1.value;
-  const id2 = sel2.value;
-  if(!id1 || !id2){ alert('Выберите двух бойцов для сравнения'); return; }
-  if(id1 === id2){ alert('Выберите двух разных бойцов'); return; }
-  renderCompareCard(card1, getFighterById(id1));
-  renderCompareCard(card2, getFighterById(id2));
-  compareResult.setAttribute('aria-hidden','false');
-  compareResult.scrollIntoView({behavior:'smooth'});
-});
-
+// === Вкладки ===
 document.querySelectorAll('.tab-btn').forEach(btn=>{
-  btn.addEventListener('click', ()=> {
-    if(btn.dataset.tab === 'compare'){
-      renderCompareCard(card1, getFighterById(sel1.value));
-      renderCompareCard(card2, getFighterById(sel2.value));
-    }
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+    document.getElementById(btn.dataset.tab).classList.add('active');
   });
 });
 
-/* ========== ГОЛОСОВАНИЕ ЗА БОЙ (новая функция) ========== */
-const voteKey = 'vote_arlan_vs_chekushov';
+// === Модалки ===
+function openModal(id){ document.getElementById(id).style.display='block'; }
+function closeModal(id){ document.getElementById(id).style.display='none'; }
+window.onclick=function(e){ document.querySelectorAll('.modal').forEach(m=>{ if(e.target===m) m.style.display='none'; }); }
 
-function getVoteData(){
-  return JSON.parse(localStorage.getItem(voteKey)) || {arlan:0, chekushov:0, voted:false};
-}
-function saveVoteData(data){
-  localStorage.setItem(voteKey, JSON.stringify(data));
-}
-function voteWinner(name){
-  const voteResult = document.getElementById('voteResult');
-  const data = getVoteData();
-  if(data.voted){
-    voteResult.textContent = `Вы уже голосовали! Арлан: ${data.arlan}, Чекушов: ${data.chekushov}`;
-    return;
-  }
-  if(name==='arlan') data.arlan++;
-  if(name==='chekushov') data.chekushov++;
-  data.voted = true;
-  saveVoteData(data);
-  voteResult.textContent = `Спасибо за голос! Арлан: ${data.arlan}, Чекушов: ${data.chekushov}`;
-}
+// === Профиль и очки ===
+function getUsers(){ return JSON.parse(localStorage.getItem('ufcUsers'))||{}; }
+function saveUsers(users){ localStorage.setItem('ufcUsers',JSON.stringify(users)); }
+function registerUser(){ const name=document.getElementById('username').value.trim(); const msg=document.getElementById('authMsg'); if(!name){ msg.textContent='Введите имя'; return; } let u=getUsers(); if(u[name]){ msg.textContent='Пользователь уже существует'; return; } u[name]={points:0}; saveUsers(u); msg.style.color='#4fc3f7'; msg.textContent='Пользователь зарегистрирован!'; setCurrentUser(name);}
+function loginUser(){ const name=document.getElementById('username').value.trim(); const msg=document.getElementById('authMsg'); let u=getUsers(); if(!u[name]){ msg.textContent='Пользователь не найден'; return; } msg.style.color='#4fc3f7'; msg.textContent='Вы вошли!'; setCurrentUser(name);}
+function setCurrentUser(name){ localStorage.setItem('ufcCurrentUser',name); updateProfile(); closeModal('authModal'); }
+function logoutUser(){ localStorage.removeItem('ufcCurrentUser'); document.getElementById('userProfile').style.display='none'; }
+function updateProfile(){ const name=localStorage.getItem('ufcCurrentUser'); if(!name) return; let u=getUsers(); if(!u[name]) return; document.getElementById('profileName').textContent=name; document.getElementById('profilePoints').textContent=u[name].points; document.getElementById('userProfile').style.display='block'; }
+function givePoints(a){ const name=localStorage.getItem('ufcCurrentUser'); if(!name){ alert('Сначала войдите в профиль'); return; } let u=getUsers(); u[name].points+=a; saveUsers(u); updateProfile(); }
 
-// Показываем текущие голоса при загрузке
-window.addEventListener('load', ()=>{
-  const data = getVoteData();
-  const voteResult = document.getElementById('voteResult');
-  voteResult.textContent = data.voted ? 
-    `Вы уже голосовали! Арлан: ${data.arlan}, Чекушов: ${data.chekushov}` : '';
-});
+// === Голосование ===
+function voteWinner(f){ const user=localStorage.getItem('ufcCurrentUser'); if(!user){ alert('Сначала войдите'); return; } document.getElementById('voteResult').textContent=`Вы проголосовали за ${f==='arlan'?'Арлана':'Чекушова'}!`; givePoints(1); }
+
+// === Снег ===
+function createSnowflake(){ const s=document.createElement("div"); s.className="snowflake"; s.innerHTML="❄️"; const size=8+Math.random()*22; s.style.fontSize=size+"px"; s.style.left=Math.random()*window.innerWidth+"px"; s.style.opacity=0.3+Math.random()*0.7; const dur=4+Math.random()*6; s.style.transition=`transform ${dur}s linear, opacity ${dur}s linear`; document.body.appendChild(s); requestAnimationFrame(()=>{ s.style.transform=`translateY(${window.innerHeight+30}px) translateX(${Math.random()*100-50}px)`; s.style.opacity=0; }); setTimeout(()=>s.remove(), dur*1000);}
+setInterval(createSnowflake,150);
+
+// === Секретный бонус ===
+function showBonus(){ document.getElementById('secretBonus').style.display='block'; givePoints(10); }
+function closeBonus(){ document.getElementById('secretBonus').style.display='none'; }
+setTimeout(showBonus,15000);
+const hiddenBtn=document.createElement('button'); hiddenBtn.style.position='fixed'; hiddenBtn.style.bottom='10px'; hiddenBtn.style.right='10px'; hiddenBtn.style.opacity='0.01'; hiddenBtn.style.width='50px'; hiddenBtn.style.height='50px'; hiddenBtn.style.border='none'; hiddenBtn.style.cursor='pointer'; hiddenBtn.title="Секретный бонус"; hiddenBtn.onclick=showBonus; document.body.appendChild(hiddenBtn);
+
+// === ПЕРЕХОД К БОЯМ КНОПКОЙ HERO ===
+function goToFights(e){
+  e.preventDefault();
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector('[data-tab="fights"]').classList.add('active');
+  document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('fights').classList.add('active');
+  document.getElementById('fights').scrollIntoView({behavior:'smooth'});
+}
 </script>
+</body>
+</html>

@@ -1,207 +1,104 @@
-/* ========== Переменные ========== */
-:root {
-  --bg: #0f1724;
-  --surface: #0b1220;
-  --muted: #9aa4b2;
-  --accent: #ff3b3b;
-  --glass: rgba(255,255,255,0.03);
-  --font: 'Inter', sans-serif;
-}
-
-/* ========== Сброс стилей ========== */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-html, body {
-  height: 100%;
-  font-family: var(--font);
-  background: linear-gradient(145deg, #0f1724, #1c1f2a, #0b1220);
-  color: #e6eef6;
-}
-
-/* ========== Шапка ========== */
-.site-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 18px 28px;
-  backdrop-filter: blur(6px);
-  background: rgba(15,23,36,0.6);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.brand {
-  font-weight: 800;
-  font-size: 22px;
-  letter-spacing: 1px;
-}
-.accent {
-  color: var(--accent);
-}
-.nav {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-.search {
-  padding: 8px 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.06);
-  min-width: 180px;
-}
-.btn {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.06);
-  padding: 8px 12px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.btn.primary {
-  background: linear-gradient(90deg, var(--accent), #ff6b6b);
-  border: none;
+/* === NEW YEAR UFC THEME === */
+body {
+  background: linear-gradient(180deg, #0b0b0b, #111);
   color: #fff;
-}
-.btn.primary:hover {
-  filter: brightness(1.2);
-}
-.btn.small {
-  padding: 6px 8px;
-  font-size: 13px;
+  font-family: 'Arial', sans-serif;
+  overflow-x: hidden;
 }
 
-/* ========== Hero ========== */
+/* Заголовки */
+h1, h2 {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Главный экран */
 .hero {
-  height: 320px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  background: radial-gradient(circle at 30% 30%, #ff3b3b, #0f1724, #1c1f2a);
-}
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(15,23,36,0.4), rgba(7,9,14,0.85));
-}
-.hero-inner {
-  position: relative;
+  padding: 80px 20px;
   text-align: center;
-  z-index: 2;
-  transform: translateZ(0);
+  background: radial-gradient(circle at top, #1a2a3a, #0b0b0b);
+  position: relative;
 }
+
+/* Неоновый заголовок */
 .hero h1 {
-  font-size: 36px;
-  margin-bottom: 10px;
-  text-shadow: 0 0 15px rgba(255,255,255,0.1);
-}
-.lead {
-  color: var(--muted);
-  font-size: 16px;
+  font-size: 42px;
+  color: #e0f7ff;
+  text-shadow: 0 0 15px #4fc3f7;
+  animation: pulseText 2s infinite;
 }
 
-/* ========== Контейнер ========== */
-.container {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 24px;
-  padding: 28px;
-  max-width: 1200px;
-  margin: -60px auto 60px;
-}
-.panel {
-  background: var(--glass);
-  padding: 16px;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(2,6,23,0.6);
-}
-.content {
-  min-height: 400px;
-}
-.controls {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
-  gap: 18px;
+/* Подзаголовок */
+.hero p {
+  font-size: 18px;
+  opacity: 0.85;
 }
 
-/* ========== Карточки бойцов ========== */
-.card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.2));
-  padding: 14px;
-  border-radius: 16px;
-  box-shadow: 0 6px 18px rgba(2,6,23,0.6);
-  transform-style: preserve-3d;
-  transition: transform 0.35s, box-shadow 0.35s;
-}
-.card:hover {
-  transform: translateY(-8px) rotateX(6deg);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.6);
-}
-.card .photo {
-  width: 100%;
-  height: 140px;
-  border-radius: 12px;
-  object-fit: cover;
-  display: block;
-}
-.card h4 {
-  margin: 10px 0 6px;
-}
-.card p {
-  margin: 0;
-  font-size: 13px;
-  color: var(--muted);
-}
-.badge {
+/* Кнопка */
+.btn, nav button, .hero-btn {
   display: inline-block;
-  padding: 6px 8px;
-  border-radius: 999px;
-  font-size: 12px;
-  background: rgba(255,255,255,0.03);
+  margin-top: 25px;
+  padding: 14px 30px;
+  background: #e53935;
+  color: white;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 0 20px rgba(229,57,53,0.6);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-/* ========== Модальные окна ========== */
-.modal {
+.btn:hover, nav button:hover, .hero-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 25px #ff3b3b, 0 0 50px rgba(255,59,59,0.4);
+}
+
+/* Карточки бойцов */
+.fighter-card, .fight-card {
+  background: #101820;
+  border-radius: 16px;
+  padding: 20px;
+  margin: 20px;
+  border: 2px solid #4fc3f7;
+  box-shadow: 0 0 25px rgba(79,195,247,0.25);
+  transition: 0.3s;
+  transform: translateY(30px);
+  opacity: 0;
+  animation: fighterAppear 0.8s forwards;
+}
+
+.fighter-card:hover, .fight-card:hover {
+  transform: scale(1.07) translateY(-5px);
+  box-shadow: 0 0 35px rgba(229,57,53,0.6);
+}
+
+/* Снежинка */
+.snowflake {
   position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(2,6,23,0.6);
-}
-.modal.hidden { display: none; }
-.modal-card {
-  background: linear-gradient(180deg, #07111a, #0b1220);
-  padding: 18px;
-  border-radius: 12px;
-  min-width: 320px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.modal input, .modal select {
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.06);
-  background: transparent;
-  color: inherit;
-}
-.modal-actions {
-  display: flex;
-  gap: 8px;
-  justify-content: flex-end;
+  top: -10px;
+  color: #fff;
+  font-size: 12px;
+  opacity: 0.8;
+  animation: fall linear infinite;
 }
 
-/* ========== Адаптив ========== */
-@media (max-width: 900px){
-  .container { grid-template-columns: 1fr; padding: 20px; margin-top: -40px; }
-  .panel { order: 2; }
+/* === Анимации бойцов === */
+@keyframes fighterAppear {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* === Пульс текста на главном экране === */
+@keyframes pulseText {
+  0%, 100% { text-shadow: 0 0 20px #4fc3f7; }
+  50% { text-shadow: 0 0 35px #4fc3f7; }
+}
+
+/* Снег падает */
+@keyframes fall {
+  to {
+    transform: translateY(110vh);
+  }
 }
